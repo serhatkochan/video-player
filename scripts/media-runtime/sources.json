@@ -1,0 +1,13 @@
+{
+  "recipe": { "url": "https://github.com/peschuster/libmpv-build.git", "revision": "9541f361ec25075e267f38f41ed460d204cd7f13" },
+  "mpv": { "url": "https://github.com/mpv-player/mpv.git", "revision": "e470f8986e7d544c7ccf526e987b9f869f0b5904" },
+  "ffmpeg": { "url": "https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg.git", "revision": "ff04763ef7cd858605cb118c5626070498f2c49c" },
+  "shaderc": { "url": "https://github.com/google/shaderc.git", "revision": "b64fd42c4a2a9d501c47aca5d3571f7673a5e9cc" },
+  "glslang": { "url": "https://github.com/KhronosGroup/glslang.git", "revision": "e1b562a8bed273a02f30b59b66a5d499793cede5" },
+  "spirv-headers": { "url": "https://github.com/KhronosGroup/SPIRV-Headers.git", "revision": "04fd3caa1e8267e4d95c806cad901181728e1006" },
+  "spirv-tools": { "url": "https://github.com/KhronosGroup/SPIRV-Tools.git", "revision": "ef96ed763b43b59b33b31b362f09a02b729fa1c9" },
+  "spirv-cross": { "url": "https://github.com/KhronosGroup/SPIRV-Cross.git", "revision": "f11ba9f0b21ba8fc15153d50a2a1ae31ab1cf8f7" },
+  "libass": { "url": "https://github.com/libass/libass.git", "revision": "f61db567e6593df3470e91594bcd4ad2d0473aff" },
+  "libplacebo": { "url": "https://code.videolan.org/videolan/libplacebo.git", "revision": "92b5ac6db79f4d680eb656692f7bf51e9606f42a" },
+  "dav1d": { "url": "https://code.videolan.org/videolan/dav1d.git", "revision": "54706fc6bc0cdecab7e9593974a4039cc038fca7" }
+}

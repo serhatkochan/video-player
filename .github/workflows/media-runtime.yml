@@ -1,0 +1,54 @@
+name: Media runtime
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Windows x64 ${{ matrix.component }}
+    runs-on: windows-2025
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        component: [libmpv, ffmpeg]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        shell: pwsh
+        run: |
+          python -m pip install meson==1.12.1 ninja==1.13.0
+          if ($LASTEXITCODE -ne 0) { throw 'Meson/Ninja installation failed' }
+          winget install --id NASM.NASM --exact --accept-source-agreements --accept-package-agreements
+          if ($LASTEXITCODE -ne 0) { throw 'NASM installation failed' }
+          choco install pkgconfiglite --yes --no-progress --limit-output
+          if ($LASTEXITCODE -ne 0) { throw 'pkg-config installation failed' }
+          "$env:LOCALAPPDATA\Microsoft\WinGet\Links" >> $env:GITHUB_PATH
+          'C:\Program Files\NASM' >> $env:GITHUB_PATH
+      - name: Build libmpv and retain corresponding sources
+        if: matrix.component == 'libmpv'
+        shell: pwsh
+        run: ./scripts/media-runtime/Build-Libmpv.ps1 -Work target/media-runtime/libmpv -Out dist/media-runtime/libmpv
+      - name: Build shared FFmpeg and retain corresponding sources
+        if: matrix.component == 'ffmpeg'
+        shell: pwsh
+        run: ./scripts/media-runtime/Pack-SharedFfmpeg.ps1 -Work target/media-runtime/ffmpeg -Out dist/media-runtime/ffmpeg
+      - name: Print failed build logs
+        if: failure()
+        shell: pwsh
+        run: |
+          Get-ChildItem target/media-runtime -Filter meson-log.txt -Recurse -ErrorAction SilentlyContinue |
+            ForEach-Object { Get-Content -LiteralPath $_.FullName -Tail 200 }
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: media-runtime-${{ matrix.component }}-windows-x64
+          path: |
+            dist/media-runtime/${{ matrix.component }}/*.zip
+            dist/media-runtime/${{ matrix.component }}/*.tar.gz
+            dist/media-runtime/${{ matrix.component }}/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 30
