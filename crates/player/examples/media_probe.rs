@@ -1,5 +1,5 @@
 //! Exercise the real bundled decoder and D3D11 renderer without the egui shell.
-//! cargo run -p video-player --example media_probe -- <media-file> [runtime-directory] [--exercise-controls]
+//! cargo run -p video-player --example media_probe -- <media-file> [runtime-directory] [--exercise-controls] [--subtitle <file>]
 
 #[path = "../src/host.rs"]
 mod host;
@@ -15,7 +15,7 @@ use std::{
 
 fn main() -> Result<()> {
     let mut args = std::env::args_os().skip(1);
-    let first = args.next().context("Usage: media_probe <media-file> [runtime-directory] [--exercise-controls], or --runtime-info [runtime-directory]")?;
+    let first = args.next().context("Usage: media_probe <media-file> [runtime-directory] [--exercise-controls] [--subtitle <file>], or --runtime-info [runtime-directory]")?;
     if first == "--runtime-info" {
         let runtime = args
             .next()
@@ -33,11 +33,33 @@ fn main() -> Result<()> {
     let media = PathBuf::from(first)
         .canonicalize()
         .context("Resolve media file")?;
-    let runtime = args
-        .next()
-        .map(PathBuf::from)
-        .unwrap_or_else(|| PathBuf::from("runtime"));
-    let exercise = args.any(|arg| arg == "--exercise-controls");
+    let mut args = args.peekable();
+    let runtime = if args
+        .peek()
+        .is_some_and(|arg| !arg.to_string_lossy().starts_with("--"))
+    {
+        PathBuf::from(args.next().unwrap())
+    } else {
+        PathBuf::from("runtime")
+    };
+    let mut exercise = false;
+    let mut subtitle = None;
+    while let Some(arg) = args.next() {
+        if arg == "--exercise-controls" {
+            exercise = true;
+        } else if arg == "--subtitle" {
+            if subtitle.is_some() {
+                bail!("Only one external subtitle can be loaded per probe");
+            }
+            subtitle = Some(
+                PathBuf::from(args.next().context("--subtitle requires a file")?)
+                    .canonicalize()
+                    .context("Resolve external subtitle file")?,
+            );
+        } else {
+            bail!("Unknown probe argument: {}", arg.to_string_lossy());
+        }
+    }
     let path = media
         .to_str()
         .context("The media path must be valid Unicode")?;
@@ -51,6 +73,7 @@ fn main() -> Result<()> {
     let deadline = Instant::now() + Duration::from_secs(20);
     let mut progressed = false;
     let mut exercised = false;
+    let mut subtitle_loaded = false;
     let mut printed_tracks = false;
     let mut next_print = Instant::now();
     while Instant::now() < deadline && !video.closed() {
@@ -78,6 +101,50 @@ fn main() -> Result<()> {
             }
             printed_tracks = true;
         }
+        if let Some(subtitle) = &subtitle
+            && !subtitle_loaded
+            && snapshot.position > 0.2
+        {
+            let existing_ids: Vec<_> = snapshot
+                .tracks
+                .iter()
+                .filter(|track| track.kind == "sub")
+                .map(|track| track.id)
+                .collect();
+            let subtitle_path = subtitle
+                .to_str()
+                .context("The subtitle path must be valid Unicode")?;
+            player.command(&["sub-add", subtitle_path, "select"])?;
+            wait_for(
+                &player,
+                |s| {
+                    s.tracks.iter().any(|track| {
+                        track.kind == "sub" && track.selected && !existing_ids.contains(&track.id)
+                    })
+                },
+                "new external subtitle selected",
+            )?;
+            let selected = player
+                .snapshot()
+                .tracks
+                .into_iter()
+                .find(|track| {
+                    track.kind == "sub" && track.selected && !existing_ids.contains(&track.id)
+                })
+                .context("External subtitle selection disappeared")?;
+            println!(
+                "subtitle-added id={} selected={} filename={}",
+                selected.id,
+                selected.selected,
+                subtitle.file_name().unwrap().to_string_lossy()
+            );
+            println!(
+                "track id={} type={} lang={} title={} selected={}",
+                selected.id, selected.kind, selected.lang, selected.title, selected.selected
+            );
+            subtitle_loaded = true;
+            println!("PASS: external subtitle loaded and selected.");
+        }
         if exercise && !exercised && snapshot.position > 0.5 {
             if !video.native_drop_target_ready() {
                 bail!("The application has not replaced libmpv's native file drop target");
@@ -99,7 +166,17 @@ fn main() -> Result<()> {
                 "pause/volume/mute/speed/subtitle delay",
             )?;
             for (kind, property) in [("audio", "aid"), ("sub", "sid")] {
-                if let Some(track) = snapshot.tracks.iter().find(|track| track.kind == kind) {
+                let previous = snapshot
+                    .tracks
+                    .iter()
+                    .find(|track| track.kind == kind && track.selected)
+                    .map(|track| track.id);
+                if let Some(track) = snapshot
+                    .tracks
+                    .iter()
+                    .find(|track| track.kind == kind && !track.selected)
+                    .or_else(|| snapshot.tracks.iter().find(|track| track.kind == kind))
+                {
                     let id = track.id;
                     player.set_property(property, &id.to_string())?;
                     wait_for(
@@ -111,6 +188,11 @@ fn main() -> Result<()> {
                         },
                         &format!("{kind} track selection"),
                     )?;
+                    if let Some(previous) = previous
+                        && previous != id
+                    {
+                        println!("track-switch type={kind} from={previous} to={id} selected=true");
+                    }
                 }
             }
             player.command(&["keypress", "SPACE"])?;
@@ -149,6 +231,12 @@ fn main() -> Result<()> {
     }
     if !progressed {
         bail!("No decoded playback progress was observed within 20 seconds");
+    }
+    if subtitle.is_some() && !subtitle_loaded {
+        bail!("The requested external subtitle was not loaded and selected");
+    }
+    if exercise && !exercised {
+        bail!("Playback ended before controls could be exercised");
     }
     println!("PASS: playback advanced. HDR correctness still requires display validation.");
     drop(player);

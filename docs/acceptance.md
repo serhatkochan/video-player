@@ -1,8 +1,8 @@
 # Windows release acceptance
 
-Automated checks establish build/registry behavior. They do not establish physical HDR output, device performance, or Explorer behavior on a clean Windows installation. The public release gate requires both actual hardware/Explorer acceptance and complete corresponding source review.
+Automated checks establish build/registry behavior. They do not establish physical HDR output, device performance, or Explorer behavior on a clean Windows installation. A stable release requires actual hardware/Explorer acceptance and complete corresponding source review. A clearly labeled preview requires complete corresponding sources, passing automated quality, runtime, thumbnail, codec-sample and measured-performance checks, and explicit `not-tested` statuses for remaining hardware scenarios.
 
-Start from `packaging/acceptance.example.json`. Record the exact Git commit, test date, tester, Windows build, GPU/driver, display model/HDR mode, and measured results. Every named result must be `pass`; retain logs, screenshots, and fixture hashes with the report. A report cannot release changed source. A later commit adding only files under `docs/acceptance/` is permitted so that the attestation can be committed after testing.
+Start from `packaging/acceptance.example.json`. Record the exact Git commit, test date, tester, Windows build, GPU/driver, display model/HDR mode, and measured results. Every required stable result must be `pass`; retain logs, screenshots, and fixture hashes with the report. A preview must identify `channel: preview`, list its limitations, and use only `pass` or `not-tested` for the hardware matrix. A report cannot release changed source. A later commit adding only files under `docs/acceptance/` is permitted so that the attestation can be committed after testing.
 
 | Scenario | Required evidence |
 | --- | --- |

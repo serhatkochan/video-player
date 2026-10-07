@@ -16,6 +16,13 @@ function Invoke-Checked([string]$Command, [string[]]$Arguments) {
 }
 function Get-PinnedSource([string]$Name, [string]$Destination) {
     $pin = $pins.$Name
+    $marker = Join-Path $Destination 'SOURCE-REVISION.json'
+    if (!(Test-Path -LiteralPath (Join-Path $Destination '.git')) -and (Test-Path -LiteralPath $marker -PathType Leaf)) {
+        $retained = Get-Content -LiteralPath $marker -Raw | ConvertFrom-Json
+        if ($retained.url -cne $pin.url -or $retained.revision -cne $pin.revision) { throw "$Name retained-source pin does not match" }
+        Write-Host "Using retained $Name sources at $($retained.revision)"
+        return
+    }
     if (!(Test-Path -LiteralPath (Join-Path $Destination '.git'))) {
         Invoke-Checked git @('init','-q',$Destination)
         Invoke-Checked git @('-C',$Destination,'config','core.autocrlf','false')
@@ -26,6 +33,7 @@ function Get-PinnedSource([string]$Name, [string]$Destination) {
     }
     $actual = (& git -C $Destination rev-parse HEAD).Trim()
     if ($LASTEXITCODE -ne 0 -or $actual -cne $pin.revision) { throw "$Name source revision does not match its full commit pin" }
+    [pscustomobject]@{url=$pin.url; revision=$actual} | ConvertTo-Json | Set-Content -LiteralPath $marker -Encoding utf8NoBOM
 }
 $recipe = Join-Path $Work 'recipe'
 $mpv = Join-Path $Work 'mpv'
@@ -94,7 +102,10 @@ $upstreamPins = Get-Content -LiteralPath (Join-Path $recipe 'sources.json') -Raw
 foreach ($name in @('mpv','ffmpeg','libass','libplacebo','dav1d')) { $upstreamPins.$name = $pins.$name }
 $upstreamPins | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $recipe 'sources.json') -Encoding utf8NoBOM
 $buildScript = Join-Path $recipe 'windows/build.ps1'
-$text = Get-Content -LiteralPath $buildScript -Raw
+$originalBuildScript = Join-Path $recipe 'windows/build.original.ps1'
+if (!(Test-Path -LiteralPath $originalBuildScript -PathType Leaf)) { Copy-Item -LiteralPath $buildScript -Destination $originalBuildScript }
+$text = Get-Content -LiteralPath $originalBuildScript -Raw
+$text = $text.Replace(([string][char]13 + [char]10),[string][char]10)
 function Replace-Required([string]$Old, [string]$New) {
     if (!$script:text.Contains($Old)) { throw "Pinned recipe no longer contains expected text: $Old" }
     $script:text = $script:text.Replace($Old,$New)
@@ -102,6 +113,18 @@ function Replace-Required([string]$Old, [string]$New) {
 $helperPattern = '(?m)^    @\{ Old = "\x27video/filter/vf_d3d11vpp[.]c\x27\)"\r?\n       New = .*?\r?\n             .*?\r?\n'
 if (![regex]::IsMatch($text,$helperPattern)) { throw 'D3D11 helper patch not found in pinned recipe' }
 $text = [regex]::Replace($text,$helperPattern,'')
+$sourcePinPattern = '(?s)if \(-not \(Test-Path \(Join-Path \$mpv "\.git"\)\)\) \{.*?\$short = \$head\.Substring\(0, 10\)'
+$sourcePinMatches = [regex]::Matches($text,$sourcePinPattern)
+if ($sourcePinMatches.Count -ne 1) { throw 'Pinned recipe mpv source-validation block changed' }
+$retainedMpvCheck = @'
+$retainedMpv = Get-Content (Join-Path $mpv "SOURCE-REVISION.json") -Raw | ConvertFrom-Json
+if ($retainedMpv.url -cne $pins.mpv.url -or $retainedMpv.revision -cne $pins.mpv.revision) {
+    throw "Retained mpv sources do not match sources.json"
+}
+$head = $retainedMpv.revision
+$short = $head.Substring(0, 10)
+'@
+Replace-Required $sourcePinMatches[0].Value $retainedMpvCheck
 Replace-Required 'meson wrap update-db' '# Wrap definitions are vendored at fixed versions.'
 Replace-Required 'if (-not (Test-Path "subprojects/$wrap.wrap")) { meson wrap install $wrap }' 'if (-not (Test-Path "subprojects/$wrap.wrap")) { throw "Missing pinned wrap: $wrap" }'
 $newline = [char]10
@@ -148,6 +171,17 @@ $records = foreach ($directory in Get-ChildItem -LiteralPath $Work -Recurse -Dir
         revision = (& git -C $source rev-parse HEAD | Out-String).Trim()
     }
 }
+foreach ($record in $records) {
+    [pscustomobject]@{url=$record.origin; revision=$record.revision} | ConvertTo-Json |
+        Set-Content -LiteralPath (Join-Path (Join-Path $Work $record.path) 'SOURCE-REVISION.json') -Encoding utf8NoBOM
+}
+if (!$records) {
+    $records = Get-ChildItem -LiteralPath $Work -Recurse -File -Filter 'SOURCE-REVISION.json' | ForEach-Object {
+        $source = Split-Path $_.FullName -Parent
+        $retained = Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json
+        [pscustomobject]@{path=$source.Substring($Work.Length + 1).Replace('\','/'); origin=$retained.url; revision=$retained.revision}
+    }
+}
 $records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $Work 'source-revisions.json') -Encoding utf8NoBOM
 $reproduction = Join-Path $Work 'reproduction'
 New-Item -ItemType Directory -Force -Path $reproduction | Out-Null
@@ -155,6 +189,14 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Build-Libmpv.ps1'),(Join-Path $
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'wraps') -Destination $reproduction -Recurse -Force
 Copy-Item -LiteralPath (Join-Path $recipe 'LICENSE') -Destination (Join-Path $licenses 'recipe-LGPL-2.1.txt')
 $buildInfo = Join-Path $package.FullName 'BUILD-INFO.txt'
+$buildInfoText = Get-Content -LiteralPath $buildInfo -Raw
+$combinedLicensePattern = '(?m)^(  The DLL as a whole is under the GNU Lesser General Public License, version\r?\n  )2[.]1( or later[.])'
+if ([regex]::Matches($buildInfoText,$combinedLicensePattern).Count -ne 1) { throw 'Pinned recipe combined-library license statement changed' }
+$buildInfoText = [regex]::Replace($buildInfoText,$combinedLicensePattern,[Text.RegularExpressions.MatchEvaluator]{
+    param($match)
+    $match.Groups[1].Value + '3' + $match.Groups[2].Value
+})
+[IO.File]::WriteAllText($buildInfo,$buildInfoText,[Text.UTF8Encoding]::new($false))
 @'
 
 Video Player modifications
