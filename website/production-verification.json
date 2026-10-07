@@ -1,0 +1,64 @@
+{
+  "result": "PASS",
+  "deploymentOrigin": "https://videoplayer.serhatkochan.com",
+  "htmlSHA256": "afebdbdb78f1da58c0393082ce1168ee3d1ed269e20210796308b9f96e7f1ff9",
+  "assets": [
+    {
+      "asset": "/styles.css",
+      "status": 200,
+      "bytes": 13804
+    },
+    {
+      "asset": "/script.js",
+      "status": 200,
+      "bytes": 764
+    },
+    {
+      "asset": "/assets/icon.svg",
+      "status": 200,
+      "bytes": 364
+    },
+    {
+      "asset": "/assets/video-player.png",
+      "status": 200,
+      "bytes": 32695
+    },
+    {
+      "asset": "/robots.txt",
+      "status": 200,
+      "bytes": 81
+    },
+    {
+      "asset": "/sitemap.xml",
+      "status": 200,
+      "bytes": 172
+    }
+  ],
+  "excludedFiles": [
+    {
+      "path": "/DESIGN.md",
+      "status": 404
+    },
+    {
+      "path": "/verification.md",
+      "status": 404
+    },
+    {
+      "path": "/browser-verification.json",
+      "status": 404
+    },
+    {
+      "path": "/Cargo.toml",
+      "status": 404
+    },
+    {
+      "path": "/.env",
+      "status": 404
+    }
+  ],
+  "desktopAndMobile": "PASS",
+  "dialogAndComparison": "PASS",
+  "securityHeaders": "PASS",
+  "console": [],
+  "requests": []
+}

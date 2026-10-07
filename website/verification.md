@@ -2,6 +2,18 @@
 
 2026-10-08 · antislop: geliştirme boyunca · Chrome headless, gerçek tarayıcı motoru.
 
+## Canlı yayın
+
+- PASS: https://videoplayer.serhatkochan.com/ oturumsuz gerçek Chrome'da HTTP 200 verdi; masaüstü ve mobil görüntüsü kontrol edildi.
+- PASS: HTTP → HTTPS 308 yönlendirmesi; güvenilir TLS sertifikası ve otomatik yenileme etkin.
+- PASS: Hostinger'da yalnız videoplayer CNAME kaydı eklendi, TTL 300. Diğer dokuz kayıt kümesinin aynı kaldığı bellekte karşılaştırıldı.
+- PASS: Vercel video-player projesi serhatkochans-projects takımındadır; GitHub serhatkochan/video-player, rootDirectory website, outputDirectory public.
+- PASS: canlı HTML, CSS, JS ve bütün görsellerin SHA-256 hashleri yerel kaynaklarla aynıdır; production-verification.json'da kayıtlıdır.
+- PASS: canlı dialog/karşılaştırma, mobil taşma, CSP başlığı ve konsol kontrolü; hata sayısı 0.
+- PASS: tasarım/test notları, Cargo.toml ve .env yayın dizininde sunulmuyor; HTTP 404 doğrulandı.
+- PASS: gerçek kurulum EXE'si HTTP 200, Content-Length 165745450. İndirme bağlantısı hesap veya kaynak derlemesi gerektirmez.
+- PASS: Hostinger API anahtarı yalnız bellekte kullanıldı; uygulama/site kaynaklarına veya dosyalara kaydedilmedi.
+
 ## Tarayıcı kanıtı
 
 - PASS: 320×700, 375×812, 390×844, 600×900, 768×1024, 812×375, 900×900, 1024×768, 1440×960 ve 1920×1080. Sayfa yatay taşmıyor; görünür link ve düğmeler en az 44×44 CSS piksel.

@@ -20,6 +20,10 @@
   Dosya Gezgini’nde videolarını küçük resimleriyle bul.
 </p>
 
+<p align="center">
+  <a href="https://videoplayer.serhatkochan.com/">Video Player tanıtım sayfası</a>
+</p>
+
 ---
 
 ## İndir
