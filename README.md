@@ -5,7 +5,7 @@
 <h1 align="center">Video Player</h1>
 
 <p align="center">
-  <strong>Windows için modern, açık kaynak video ve ses oynatıcı.</strong>
+  <strong>Windows için Rust ile geliştirilen, hız odaklı açık kaynak video ve ses oynatıcı.</strong>
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@
 ## İndir
 
 <p align="center">
-  <strong><a href="https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe">Video Player 0.1.0 indir (.exe)</a></strong><br />
+  <strong><a href="https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe">Video Player 0.1.0 kurulum EXE’si (yayın hazırlığında)</a></strong><br />
   Windows 11 · Intel/AMD 64 bit
 </p>
 
@@ -35,7 +35,7 @@
 
 Kurulum EXE’sini indirip çalıştırman yeterli. Kaynak kodu indirmen, Rust kurman veya uygulamayı derlemen gerekmez. Oynatma için gerekli medya bileşenleri kurulum paketinde bulunur.
 
-> **Yayın durumu:** 0.1.0 bir geliştirme sürümüdür ve henüz GitHub Releases üzerinde yayımlanmadı. EXE bağlantısı, kurulum dosyası yayımlandığında çalışacaktır. Temiz Windows kurulumu, fiziksel HDR ekran, farklı donanımlar ve bağımlılıkların kaynak dağıtımı için yayın doğrulamaları sürüyor.
+> **Yayın durumu:** Kaynak kod MIT lisansıyla açıktır. 0.1.0 kurulum EXE’si henüz genel indirmeye açılmadı; bağlantı paket yayımlandığında çalışacaktır. Paketli medya bağımlılıklarının tam kaynak dağıtımı ve donanım kabul testleri tamamlanıyor. Ayrıntılar [yayın koşullarında](docs/dependencies.md#corresponding-sources-and-publishing) bulunur.
 
 ---
 
@@ -50,6 +50,25 @@ Dosya Gezgini için ayrı bir küçük resim sağlayıcısı içerir. Böylece v
 </p>
 
 <p align="center"><em>Video Player 0.1.0’ın gerçek açılış ekranı.</em></p>
+
+---
+
+## Performans
+
+Hız metriklerini gerçek oynatma altyapısıyla ölçüyoruz. Aşağıdaki sonuçlar **i9-13900K, RTX 4080 ve 32 GB RAM** bulunan Windows 11 cihazında, 1080p H.264/AAC video ile alındı. Bir ısınma denemesi ardından yedi denemenin medyanı kullanıldı; önbellekler sıcaktı.
+
+| Ölçüm | Medyan |
+| :--- | ---: |
+| Yerel video yüzeyi ve libmpv başlatma | **13,8 ms** |
+| Dosya yükleme → ilk oynatma ilerlemesi bildirimi | **324 ms** |
+| 30. saniyeye hassas sarma konumunun onayı | **13,1 ms** |
+| Boşta RAM, çalışma kümesi | **160,5 MiB** |
+| 1080p oynatmada RAM, çalışma kümesi | **311,3 MiB** |
+| 1080p oynatmada CPU, toplam makine kapasitesi | **%0,195** |
+
+Motor süreleri, libmpv’nin durum bildirimlerini ölçer; ilk görüntünün ekrana düşme süresi değildir. RAM değerleri GPU VRAM’ini içermez. Sonuçlar tek cihaz ve tek örneğe aittir.
+
+[Ölçüm yöntemi ve tekrar çalıştırma](docs/performance.md) · [Yedi denemenin ham sonuçları](docs/benchmarks/0.1.0-windows-x64.json)
 
 ---
 

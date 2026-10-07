@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "measured_at_utc": "2026-10-07T18:24:52.0544861Z",
+  "player_sha256": "363874fb2b1a86bdd6538d9a9ed7ca3300e709af375142af55784725549ca6ba",
+  "runtime_sha256": {
+    "libmpv": "523952e6e948c3880a14be8906553e52590cc18e7e4ec7b817ed1be7a1f6e7a9",
+    "ffmpeg": "a3bf949b1262ec9893bd80b681ec6001ba028bc7c8a4885e23c8df5b0ce95b1a"
+  },
+  "system": {
+    "os": "Microsoft Windows 11 Pro",
+    "build": "26200",
+    "logical_processors": 32,
+    "cpu": [
+      {
+        "Name": "13th Gen Intel(R) Core(TM) i9-13900K",
+        "NumberOfCores": 24,
+        "NumberOfLogicalProcessors": 32
+      }
+    ],
+    "gpu": [
+      {
+        "Name": "NVIDIA GeForce RTX 4080",
+        "DriverVersion": "32.0.15.9186"
+      }
+    ],
+    "physical_memory_gib": 31.71
+  },
+  "media": {
+    "file": "h264-1080p30.mp4",
+    "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a",
+    "bytes": 59821563
+  },
+  "conditions": {
+    "warmup_discarded_per_scenario": 1,
+    "measured_trials": 7,
+    "cache": "warm OS and file cache",
+    "resource_window_seconds": [
+      2,
+      5
+    ],
+    "cpu_normalization": "process CPU seconds / elapsed seconds / logical processors * 100",
+    "memory": "process working set and private bytes; excludes GPU VRAM",
+    "window_metric": "process launch until MainWindowHandle becomes nonzero; not first painted frame"
+  },
+  "gui": {
+    "idle": {
+      "warmup": {
+        "trial": 0,
+        "window_created_ms": 54.7776,
+        "cpu_machine_percent": 0.149,
+        "working_set_mib": 160.2471,
+        "private_memory_mib": 392.4045,
+        "sample_count": 43,
+        "codec": "",
+        "hwdec": ""
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "window_created_ms": 35.7995,
+          "cpu_machine_percent": 0.113,
+          "working_set_mib": 160.4316,
+          "private_memory_mib": 391.5732,
+          "sample_count": 47,
+          "codec": "",
+          "hwdec": ""
+        },
+        {
+          "trial": 2,
+          "window_created_ms": 28.6293,
+          "cpu_machine_percent": 0.1464,
+          "working_set_mib": 160.402,
+          "private_memory_mib": 391.244,
+          "sample_count": 43,
+          "codec": "",
+          "hwdec": ""
+        },
+        {
+          "trial": 3,
+          "window_created_ms": 30.084,
+          "cpu_machine_percent": 0.0983,
+          "working_set_mib": 160.3873,
+          "private_memory_mib": 392.4677,
+          "sample_count": 45,
+          "codec": "",
+          "hwdec": ""
+        },
+        {
+          "trial": 4,
+          "window_created_ms": 29.885,
+          "cpu_machine_percent": 0.0804,
+          "working_set_mib": 160.4635,
+          "private_memory_mib": 392.7006,
+          "sample_count": 48,
+          "codec": "",
+          "hwdec": ""
+        },
+        {
+          "trial": 5,
+          "window_created_ms": 30.1368,
+          "cpu_machine_percent": 0.0967,
+          "working_set_mib": 160.6926,
+          "private_memory_mib": 391.6469,
+          "sample_count": 46,
+          "codec": "",
+          "hwdec": ""
+        },
+        {
+          "trial": 6,
+          "window_created_ms": 29.46,
+          "cpu_machine_percent": 0.0973,
+          "working_set_mib": 160.4749,
+          "private_memory_mib": 392.1244,
+          "sample_count": 42,
+          "codec": "",
+          "hwdec": ""
+        },
+        {
+          "trial": 7,
+          "window_created_ms": 29.5594,
+          "cpu_machine_percent": 0.0815,
+          "working_set_mib": 160.6057,
+          "private_memory_mib": 392.157,
+          "sample_count": 44,
+          "codec": "",
+          "hwdec": ""
+        }
+      ],
+      "summary": {
+        "window_created_ms": {
+          "count": 7,
+          "median": 29.885,
+          "min": 28.6293,
+          "max": 35.7995
+        },
+        "cpu_machine_percent": {
+          "count": 7,
+          "median": 0.0973,
+          "min": 0.0804,
+          "max": 0.1464
+        },
+        "working_set_mib": {
+          "count": 7,
+          "median": 160.4635,
+          "min": 160.3873,
+          "max": 160.6926
+        },
+        "private_memory_mib": {
+          "count": 7,
+          "median": 392.1244,
+          "min": 391.244,
+          "max": 392.7006
+        }
+      }
+    },
+    "playback": {
+      "warmup": {
+        "trial": 0,
+        "window_created_ms": 33.0515,
+        "cpu_machine_percent": 0.3533,
+        "working_set_mib": 256.383,
+        "private_memory_mib": 534.0486,
+        "sample_count": 44,
+        "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "hwdec": "d3d11va"
+      },
+      "trials": [
+        {
+          "trial": 1,
+          "window_created_ms": 28.9664,
+          "cpu_machine_percent": 0.163,
+          "working_set_mib": 317.6828,
+          "private_memory_mib": 597.984,
+          "sample_count": 42,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        },
+        {
+          "trial": 2,
+          "window_created_ms": 29.7141,
+          "cpu_machine_percent": 0.1939,
+          "working_set_mib": 315.5924,
+          "private_memory_mib": 595.7898,
+          "sample_count": 43,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        },
+        {
+          "trial": 3,
+          "window_created_ms": 30.216,
+          "cpu_machine_percent": 0.2595,
+          "working_set_mib": 311.2566,
+          "private_memory_mib": 591.5437,
+          "sample_count": 44,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        },
+        {
+          "trial": 4,
+          "window_created_ms": 30.0456,
+          "cpu_machine_percent": 0.1129,
+          "working_set_mib": 283.7764,
+          "private_memory_mib": 563.0551,
+          "sample_count": 43,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        },
+        {
+          "trial": 5,
+          "window_created_ms": 30.1453,
+          "cpu_machine_percent": 0.2267,
+          "working_set_mib": 272.5757,
+          "private_memory_mib": 553.9198,
+          "sample_count": 43,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        },
+        {
+          "trial": 6,
+          "window_created_ms": 30.2539,
+          "cpu_machine_percent": 0.1946,
+          "working_set_mib": 250.9831,
+          "private_memory_mib": 530.9272,
+          "sample_count": 44,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        },
+        {
+          "trial": 7,
+          "window_created_ms": 30.7162,
+          "cpu_machine_percent": 0.1958,
+          "working_set_mib": 314.9554,
+          "private_memory_mib": 597.2874,
+          "sample_count": 46,
+          "codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "hwdec": "d3d11va"
+        }
+      ],
+      "summary": {
+        "window_created_ms": {
+          "count": 7,
+          "median": 30.1453,
+          "min": 28.9664,
+          "max": 30.7162
+        },
+        "cpu_machine_percent": {
+          "count": 7,
+          "median": 0.1946,
+          "min": 0.1129,
+          "max": 0.2595
+        },
+        "working_set_mib": {
+          "count": 7,
+          "median": 311.2566,
+          "min": 250.9831,
+          "max": 317.6828
+        },
+        "private_memory_mib": {
+          "count": 7,
+          "median": 591.5437,
+          "min": 530.9272,
+          "max": 597.984
+        }
+      }
+    }
+  },
+  "native": {
+    "discarded_warmup": {
+      "duration_seconds": 60.0,
+      "first_playback_progress_ms": 446.29069999999996,
+      "hwdec": "d3d11va",
+      "native_host_and_mpv_initialization_ms": 359.5482,
+      "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+      "paused_exact_seek_ms": 15.684900000000003,
+      "seek_baseline_seconds": 0.06666666666666667,
+      "seek_observed_seconds": 30.0,
+      "seek_target_seconds": 30.0,
+      "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+    },
+    "limitations": [
+      "Initialization covers VideoHost and Mpv, not egui or complete application startup.",
+      "First playback progress is a matching nonidle snapshot with duration > 0 and position > 0, not the first rendered frame.",
+      "Seek latency ends at paused time-pos within 0.05 seconds of the requested different position, not rendered-frame confirmation.",
+      "Each trial uses a new host and player; OS, GPU-driver and filesystem caches are not flushed.",
+      "Polling, async property publication and Windows thread scheduling affect the measured latency.",
+      "Snapshot waits have fixed deadlines; the production blocking Mpv constructor and teardown have no separate timeout."
+    ],
+    "measured_trials": [
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 325.75730000000004,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 15.8195,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 12.684199999999999,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      },
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 318.40610000000004,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 14.3313,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 19.802699999999998,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      },
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 320.0547,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 15.1785,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 17.1171,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      },
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 340.50570000000005,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 13.8187,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 14.0491,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      },
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 318.6737,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 13.7987,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 12.1574,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      },
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 324.0251,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 13.5953,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 13.0007,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      },
+      {
+        "duration_seconds": 60.0,
+        "first_playback_progress_ms": 325.3915,
+        "hwdec": "d3d11va",
+        "native_host_and_mpv_initialization_ms": 13.4346,
+        "output_colorspace": "bt.709 / bt.1886 / rgb10a2",
+        "paused_exact_seek_ms": 13.079699999999999,
+        "seek_baseline_seconds": 0.06666666666666667,
+        "seek_observed_seconds": 30.0,
+        "seek_target_seconds": 30.0,
+        "video_codec": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10"
+      }
+    ],
+    "media_bytes": 59821563,
+    "media_filename": "h264-1080p30.mp4",
+    "native_surface": "hidden 960x540 HWND; production VideoHost and Mpv",
+    "poll_interval_ms": 3,
+    "profile": "release",
+    "schema_version": 1,
+    "summary": {
+      "first_playback_progress_ms": {
+        "max": 340.50570000000005,
+        "median": 324.0251,
+        "min": 318.40610000000004
+      },
+      "native_host_and_mpv_initialization_ms": {
+        "max": 15.8195,
+        "median": 13.8187,
+        "min": 13.4346
+      },
+      "paused_exact_seek_ms": {
+        "max": 19.802699999999998,
+        "median": 13.079699999999999,
+        "min": 12.1574
+      }
+    },
+    "wait_deadline_ms": 20000
+  }
+}
