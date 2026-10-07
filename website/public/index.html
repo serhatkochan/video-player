@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101112">
+  <title>Video Player · Windows için açık kaynak oynatıcı</title>
+  <meta name="description" content="HEVC ve AV1 dahil yerel videoların için sade bir Windows oynatıcı. Ücretsiz, açık kaynak ve çevrimdışı. Video Player kurulum EXE’sini doğrudan indir.">
+  <link rel="canonical" href="https://videoplayer.serhatkochan.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="Video Player · Dosyanı aç. Keyfine bak.">
+  <meta property="og:description" content="Windows için açık kaynak video oynatıcı. HEVC, AV1, altyazılar ve çevrimdışı kurulum.">
+  <meta property="og:url" content="https://videoplayer.serhatkochan.com/">
+  <meta property="og:image" content="https://videoplayer.serhatkochan.com/assets/video-player.png">
+  <meta property="og:image:width" content="1100">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#icerik">İçeriğe geç</a>
+  <header class="header wrap" id="baslangic">
+    <a class="brand" href="#baslangic" aria-label="Video Player, sayfanın başı">
+      <img src="/assets/icon.svg" width="40" height="40" alt="">
+      <span>Video Player</span>
+    </a>
+    <nav aria-label="Ana gezinme">
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#performans">Performans</a>
+      <a href="https://github.com/serhatkochan/video-player">GitHub</a>
+    </nav>
+    <a class="button button-small button-outline header-download" href="#indir">İndir</a>
+  </header>
+
+  <main id="icerik">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Windows 11 için</p>
+        <h1 id="hero-title">Dosyanı aç.<br><em>Keyfine bak.</em></h1>
+        <p class="hero-description">HEVC, AV1 ve bildiğin diğer formatlar. Altyazını seç, hızını ayarla, kaldığın yerden devam et.</p>
+        <a class="button button-primary" data-download href="https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg>
+          Windows için indir
+        </a>
+        <p class="download-meta">0.1.0 ön sürüm · Intel/AMD x64 · 165,7 MB</p>
+        <p class="hero-note">Ücretsiz ve açık kaynak.<br>Hesap gerektirmez. Çevrimdışı kurulur.</p>
+      </div>
+      <figure class="app-preview">
+        <div class="preview-frame">
+          <img src="/assets/video-player.png" alt="Video Player’ın gerçek açılış ekranı. Dosya aç, Ayarlar, geniş zaman çizgisi ve oynatma kontrolleri." width="1100" height="720" fetchpriority="high">
+        </div>
+        <figcaption>
+          <span>0.1.0’ın gerçek arayüzü</span>
+          <button class="text-button" id="preview-open" type="button" aria-haspopup="dialog" hidden>
+            Yakından gör
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/></svg>
+          </button>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="formats wrap" aria-labelledby="formats-title">
+      <div class="formats-intro">
+        <h2 id="formats-title">Bir uzantıya<br>takılıp kalma.</h2>
+        <p>Medya bileşenleri paketin içinde.</p>
+      </div>
+      <div class="format-groups">
+        <div class="format-group"><span class="format-label">Görüntü</span><p>HEVC <span>/</span> AV1 <span>/</span> H.264 <span>/</span> VP9</p></div>
+        <div class="format-group"><span class="format-label">Video dosyası</span><p>MP4 · MKV · MOV · WebM · AVI · WMV · M4V</p></div>
+        <div class="format-group"><span class="format-label">Ses &amp; altyazı</span><p>MP3 · FLAC · WAV · AAC/M4A <span class="format-separator">/</span> SRT · ASS/SSA · VTT</p></div>
+      </div>
+    </section>
+
+    <section class="features wrap section-space" id="ozellikler" aria-labelledby="features-title">
+      <div class="section-heading">
+        <p class="eyebrow">İzlerken ihtiyacın olanlar</p>
+        <h2 id="features-title">Kontrol sende.<br><em>Video ön planda.</em></h2>
+        <p>Yerel dosyaların için gereken kontroller, sade bir arayüzde bir arada.</p>
+        <a class="underlined-link" href="https://github.com/serhatkochan/video-player#klavye-kısayolları">Klavye kısayollarını gör</a>
+      </div>
+      <dl class="feature-list">
+        <div><dt><span aria-hidden="true">01</span> Altyazın, senin ayarın.</dt><dd>Gömülü veya harici altyazıyı seç. ASS/SSA stillerini kullan, gecikmeyi ayarla. Çoklu ses parçaları arasında geçiş yap.</dd></div>
+        <div><dt><span aria-hidden="true">02</span> Klasöründeki sıradaki video.</dt><dd>Sol ve sağ kontrollerle aynı klasördeki dosyalara geç. Geniş zaman çizgisiyle istediğin ana dön.</dd></div>
+        <div><dt><span aria-hidden="true">03</span> Kendi izleme tempon.</dt><dd>Hızı 0,25× ile 4× arasında ayarla. Tam ekrana geç, kontrolleri gizle. Sonraki açışında kaldığın yerden devam et.</dd></div>
+        <div><dt><span aria-hidden="true">04</span> Dosyaların bilgisayarında kalır.</dt><dd>Videonu sürükleyip bırak veya dosyadan aç. Hesap, API anahtarı ya da abonelik gerekmez. Tercihler ve devam etme bilgileri yerel saklanır.</dd></div>
+      </dl>
+    </section>
+
+    <section class="explorer wrap" aria-labelledby="explorer-title">
+      <div class="explorer-heading">
+        <p class="eyebrow">Bu projenin çıkış noktası</p>
+        <h2 id="explorer-title">Videonu,<br><em>dosyasından tanı.</em></h2>
+      </div>
+      <div class="explorer-copy">
+        <p class="large-copy">Dosya Gezgini için küçük resimler.</p>
+        <p>Paket, videodan kare üreten ayrı bir küçük resim sağlayıcısı içerir. Oynatıcı seçimi ile küçük resim üretimi ayrı çalışır.</p>
+        <p>Görünmeyen küçük resimler için uygulamanın Ayarlar bölümündeki Windows tanılamasını kullanabilirsin.</p>
+        <p class="scope-note">Gerçek Explorer kaydı ve varsayılan oynatıcı geçişi, ön sürümün henüz tamamlanmamış testleri arasında.</p>
+      </div>
+    </section>
+
+    <section class="performance section-space" id="performans" aria-labelledby="performance-title">
+      <div class="wrap">
+        <div class="performance-heading">
+          <div><p class="eyebrow">Ölçtük. Sonuçları paylaştık.</p><h2 id="performance-title">Hızın bir<br><em>karşılığı var.</em></h2></div>
+          <p>Tek cihaz, tek örnek dosya, yedi ölçüm.<br>İddialar yerine bakabileceğin sonuçlar.</p>
+        </div>
+        <div class="measurements">
+          <div class="primary-measurement"><p class="measurement-value">11,1<span>ms</span></p><h3>Oynatma motorunu başlatma</h3><p>Yerel video yüzeyi + libmpv.<br>İlk görüntünün ekrana gelme süresi değildir.</p></div>
+          <dl class="measurement-list">
+            <div><dt>İlk oynatma ilerlemesi bildirimi</dt><dd>325,2 <span>ms</span></dd></div>
+            <div><dt>1080p oynatmada RAM</dt><dd>243,8 <span>MiB</span></dd></div>
+            <div><dt>1080p oynatmada toplam CPU</dt><dd><span>%</span>0,246</dd></div>
+          </dl>
+        </div>
+        <div class="measurement-context"><p>Windows 11 · i9-13900K · RTX 4080 · 32 GB RAM. 1080p H.264/AAC dosyası; bir ısınma sonrası yedi denemenin medyanı, sıcak önbellek. RAM, GPU belleğini içermez. Sonuçlar bu cihaz ve örneğe aittir.</p><a class="underlined-link" href="https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/performance.md">Ölçüm yöntemi ve ham sonuçlar</a></div>
+        <details class="comparison">
+          <summary>VLC ve mpv ile aynı cihazdaki karşılaştırma <span aria-hidden="true">+</span></summary>
+          <div class="comparison-content">
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Oynatıcı karşılaştırması, dar ekranda yatay kaydırılabilir">
+              <table><caption>Ayrı karşılaştırma oturumu: bir ısınma ve yedi deneme, aynı 1080p dosya.</caption><thead><tr><th scope="col">Oynatıcı</th><th scope="col">Pencere tanıtıcısı</th><th scope="col">RAM</th><th scope="col">CPU</th></tr></thead><tbody><tr><th scope="row">Video Player 0.1.0</th><td>28,7 ms</td><td>243,9 MiB</td><td>%0,196</td></tr><tr><th scope="row">VLC 3.0.23</th><td>131,1 ms</td><td>170,1 MiB</td><td>%0,082</td></tr><tr><th scope="row">mpv 0.41.0, geliştirme</th><td>198,2 ms</td><td>158,9 MiB</td><td>%0,146</td></tr></tbody></table>
+            </div>
+            <p>Video Player’ın pencere tanıtıcısı daha erken oluştu; VLC ve mpv daha az RAM ve CPU kullandı. Pencere metriği, ilk görüntüyü veya oynatmaya hazır olmayı ölçmez. Arayüz boyutları farklıydı; bu sonuçlar bütün videolar için hız sıralaması oluşturmaz.</p>
+            <a class="underlined-link" href="https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/benchmarks/0.1.0-player-comparison.json">Karşılaştırmanın ham verileri</a>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="download wrap section-space" id="indir" aria-labelledby="download-title">
+      <div class="download-copy"><p class="eyebrow">Video Player 0.1.0</p><h2 id="download-title">Bir sonraki videon<br><em>burada başlasın.</em></h2><p>Tek kurulum paketi. Gerekli medya bileşenleri dahil.<br>Kaynak kodunu indirmen veya derlemen gerekmez.</p><a class="button button-primary" data-download href="https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg>Kurulum EXE’sini indir</a><p class="download-meta">Windows 11 · Intel/AMD x64 · 165,7 MB</p><a class="underlined-link" href="https://github.com/serhatkochan/video-player/releases/tag/v0.1.0">Sürüm notları ve tüm dosyalar</a></div>
+      <aside class="release-note" aria-labelledby="release-title"><p class="eyebrow">İndirmeden önce</p><h3 id="release-title">Bu bir ön sürüm.</h3><p>Örnek dosyalarda oynatma ve yerel küçük resim üretimi test edildi. Temiz Windows, gerçek Explorer entegrasyonu, fiziksel HDR ekranlar ve tam donanım/format matrisi henüz doğrulanmadı.</p><p>Yönetici hesabında tüm kullanıcılar için; standart hesapta mevcut kullanıcı için kurulur. Windows gerektiğinde yönetici izni ister.</p><a class="underlined-link" href="https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/acceptance/0.1.0.json">Test kapsamını incele</a></aside>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <div class="footer-brand"><img src="/assets/icon.svg" width="32" height="32" alt=""><span>Video Player</span><span class="footer-by">Serhat Kochan tarafından.</span></div>
+    <div class="footer-links"><a href="https://github.com/serhatkochan/video-player/blob/main/LICENSE">Kod: MIT lisansı</a><a href="https://github.com/serhatkochan/video-player/issues">Sorun bildir</a><a href="https://github.com/serhatkochan/video-player">GitHub</a></div>
+    <p class="license-note">Uygulama kodu MIT lisanslıdır. Paketlenmiş medya bileşenleri kendi açık kaynak lisanslarını korur.</p>
+  </footer>
+
+  <dialog id="preview-dialog" aria-labelledby="preview-title">
+    <div class="dialog-header"><h2 id="preview-title">Video Player’ın gerçek arayüzü</h2><button class="button button-outline" id="preview-close" type="button">Kapat</button></div>
+    <img src="/assets/video-player.png" width="1100" height="720" alt="Video Player 0.1.0 açılış ekranının büyük görüntüsü.">
+  </dialog>
+</body>
+</html>

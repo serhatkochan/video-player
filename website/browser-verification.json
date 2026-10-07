@@ -1,0 +1,149 @@
+{
+  "checks": [
+    {
+      "width": 375,
+      "height": 812,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 600,
+      "height": 900,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 900,
+      "height": 900,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 1440,
+      "height": 960,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 812,
+      "height": 375,
+      "overflow": false,
+      "targets": 18
+    },
+    {
+      "width": 320,
+      "height": 700,
+      "overflow": false,
+      "targets": 18
+    }
+  ],
+  "anchors": [
+    {
+      "label": "İçeriğe geç",
+      "href": "#icerik"
+    },
+    {
+      "label": "Video Player",
+      "href": "#baslangic"
+    },
+    {
+      "label": "Özellikler",
+      "href": "#ozellikler"
+    },
+    {
+      "label": "Performans",
+      "href": "#performans"
+    },
+    {
+      "label": "İndir",
+      "href": "#indir"
+    }
+  ],
+  "external": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/serhatkochan/video-player",
+      "attribute": "https://github.com/serhatkochan/video-player"
+    },
+    {
+      "label": "Windows için indir",
+      "href": "https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe",
+      "attribute": "https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe"
+    },
+    {
+      "label": "Klavye kısayollarını gör",
+      "href": "https://github.com/serhatkochan/video-player#klavye-k%C4%B1sayollar%C4%B1",
+      "attribute": "https://github.com/serhatkochan/video-player#klavye-kısayolları"
+    },
+    {
+      "label": "Ölçüm yöntemi ve ham sonuçlar",
+      "href": "https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/performance.md",
+      "attribute": "https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/performance.md"
+    },
+    {
+      "label": "Karşılaştırmanın ham verileri",
+      "href": "https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/benchmarks/0.1.0-player-comparison.json",
+      "attribute": "https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/benchmarks/0.1.0-player-comparison.json"
+    },
+    {
+      "label": "Kurulum EXE’sini indir",
+      "href": "https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe",
+      "attribute": "https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe"
+    },
+    {
+      "label": "Sürüm notları ve tüm dosyalar",
+      "href": "https://github.com/serhatkochan/video-player/releases/tag/v0.1.0",
+      "attribute": "https://github.com/serhatkochan/video-player/releases/tag/v0.1.0"
+    },
+    {
+      "label": "Test kapsamını incele",
+      "href": "https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/acceptance/0.1.0.json",
+      "attribute": "https://github.com/serhatkochan/video-player/blob/v0.1.0/docs/acceptance/0.1.0.json"
+    },
+    {
+      "label": "Kod: MIT lisansı",
+      "href": "https://github.com/serhatkochan/video-player/blob/main/LICENSE",
+      "attribute": "https://github.com/serhatkochan/video-player/blob/main/LICENSE"
+    },
+    {
+      "label": "Sorun bildir",
+      "href": "https://github.com/serhatkochan/video-player/issues",
+      "attribute": "https://github.com/serhatkochan/video-player/issues"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/serhatkochan/video-player",
+      "attribute": "https://github.com/serhatkochan/video-player"
+    }
+  ],
+  "dialog": "PASS: open, close, escape, backdrop, return focus",
+  "comparison": "PASS: click, enter, space, keyboard scroll",
+  "reducedMotion": "PASS",
+  "textZoom200": "PASS",
+  "console": [],
+  "requests": []
+}
