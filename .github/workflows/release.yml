@@ -6,6 +6,11 @@ on:
         description: Committed acceptance attestation path
         required: true
         default: docs/acceptance/0.1.0.json
+      channel:
+        description: Preview declares untested hardware; stable requires the full matrix
+        type: choice
+        options: [preview, stable]
+        default: preview
 permissions:
   contents: read
 jobs:
@@ -28,6 +33,7 @@ jobs:
         shell: pwsh
         env:
           ACCEPTANCE_FILE: ${{ inputs.acceptance_file }}
+          RELEASE_CHANNEL: ${{ inputs.channel }}
           GH_TOKEN: ${{ github.token }}
         run: |
           rustup default 1.98.0
@@ -35,7 +41,8 @@ jobs:
           ./scripts/Get-BuildTools.ps1
           ./scripts/Test-InstallerInitialization.ps1
           ./scripts/Test-RustNotices.ps1
-          ./scripts/Build-Windows.ps1 -ForRelease -AcceptanceFile $env:ACCEPTANCE_FILE
+          ./scripts/Test-ReleaseGateRegression.ps1
+          ./scripts/Build-Windows.ps1 -ForRelease -AcceptanceFile $env:ACCEPTANCE_FILE -Channel $env:RELEASE_CHANNEL
       - name: Archive corresponding sources and notices
         shell: pwsh
         run: |
@@ -62,7 +69,16 @@ jobs:
       - name: Create reviewable draft
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_CHANNEL: ${{ inputs.channel }}
         run: |
           version=$(sed -n 's/^version = "\([0-9.]*\)"/\1/p' Cargo.toml | head -n 1)
           mapfile -t artifacts < <(rg --files release)
-          gh release create "v$version" "${artifacts[@]}" --target "$GITHUB_SHA" --draft --title "Video Player $version" --notes "Windows x64 release candidate. Hardware acceptance and corresponding source gates passed; review artifacts before publishing."
+          flags=()
+          notes="Windows x64 release. Full hardware acceptance and corresponding source gates passed."
+          title="Video Player $version"
+          if [ "$RELEASE_CHANNEL" = preview ]; then
+            flags+=(--prerelease)
+            title="Video Player $version — Ön sürüm"
+            notes="Windows x64 preview. Automated playback, thumbnail and source checks passed. Clean-Windows, codec-matrix and physical HDR acceptance remains incomplete; see the committed acceptance report."
+          fi
+          gh release create "v$version" "${artifacts[@]}" "${flags[@]}" --target "$GITHUB_SHA" --draft --title "$title" --notes "$notes"

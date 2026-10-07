@@ -20,8 +20,12 @@ if (!(Test-Path -LiteralPath $Executable -PathType Leaf)) { throw 'Build the rel
 New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 if (!(Test-Path -LiteralPath $MediaPath -PathType Leaf)) {
     New-Item -ItemType Directory -Force -Path (Split-Path $MediaPath -Parent) | Out-Null
-    & (Join-Path $RuntimeDirectory 'ffmpeg.exe') -hide_banner -loglevel warning -y -f lavfi -i 'testsrc2=size=1920x1080:rate=30' -f lavfi -i 'sine=frequency=440:sample_rate=48000' -t 60 -c:v libopenh264 -b:v 8M -pix_fmt yuv420p -g 60 -c:a aac -b:a 128k -movflags +faststart $MediaPath
-    if ($LASTEXITCODE -ne 0) { throw 'Synthetic media generation failed' }
+    $fixtureUrl = 'https://github.com/serhatkochan/video-player/releases/download/v0.1.0/benchmark-h264-1080p30.mp4'
+    $fixtureHash = 'cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a'
+    $download = $MediaPath + '.download'
+    Invoke-WebRequest -UseBasicParsing -Uri $fixtureUrl -OutFile $download -TimeoutSec 180
+    if ((Get-FileHash -LiteralPath $download -Algorithm SHA256).Hash.ToLowerInvariant() -ne $fixtureHash) { throw 'Benchmark fixture checksum mismatch' }
+    Move-Item -LiteralPath $download -Destination $MediaPath
 }
 
 function Get-Summary([double[]]$Values) {
@@ -35,7 +39,11 @@ function Get-Summary([double[]]$Values) {
 function Measure-Player([string]$Scenario, [int]$Trial) {
     $smokeFile = Join-Path $OutputDirectory ('smoke-{0}-{1}-{2}.json' -f $Scenario,$Trial,[Guid]::NewGuid().ToString('N'))
     $arguments = @('"--smoke-report=' + $smokeFile + '"')
-    if ($Scenario -eq 'playback') { $arguments += '"' + $MediaPath + '"' }
+    if ($Scenario -eq 'playback') {
+        $freshMedia = Join-Path (Split-Path $MediaPath -Parent) ('performance-' + [Guid]::NewGuid().ToString('N') + [IO.Path]::GetExtension($MediaPath))
+        New-Item -ItemType HardLink -Path $freshMedia -Target $MediaPath | Out-Null
+        $arguments += '"' + $freshMedia + '"'
+    }
     $clock = [Diagnostics.Stopwatch]::StartNew()
     $process = Start-Process -FilePath $Executable -ArgumentList $arguments -PassThru -WindowStyle Hidden
     $windowMs = $null

@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$NsisPath, [switch]$SkipCargo, [switch]$ForRelease, [string]$AcceptanceFile)
+param([string]$NsisPath, [switch]$SkipCargo, [switch]$ForRelease, [string]$AcceptanceFile, [ValidateSet('stable','preview')][string]$Channel = 'stable')
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path $PSScriptRoot -Parent
 Push-Location $repo
@@ -12,7 +12,10 @@ try {
     }
     & (Join-Path $PSScriptRoot 'Get-Runtime.ps1')
     & (Join-Path $PSScriptRoot 'Get-RustNotices.ps1')
-    & (Join-Path $PSScriptRoot 'Get-SourceSeeds.ps1')
+    $runtimePins = Get-Content (Join-Path $repo 'packaging/runtime-manifest.json') -Raw | ConvertFrom-Json
+    if (@($runtimePins.assets | Where-Object { !$_.sourceBundleComplete }).Count) {
+        & (Join-Path $PSScriptRoot 'Get-SourceSeeds.ps1')
+    }
     if (!$NsisPath) {
         & (Join-Path $PSScriptRoot 'Get-BuildTools.ps1')
         $local = Get-ChildItem (Join-Path $repo 'tools') -Recurse -Filter makensis.exe -ErrorAction SilentlyContinue | Select-Object -First 1
@@ -33,7 +36,12 @@ try {
         Copy-Item -LiteralPath (Join-Path $repo "target/release/$file") -Destination $stage
     }
     Copy-Item -LiteralPath (Join-Path $repo 'target/release/examples/thumbnail_worker.exe') -Destination (Join-Path $stage 'thumbnail-worker.exe')
-    Get-ChildItem (Join-Path $repo 'runtime') -File | Where-Object { $_.Extension -eq '.dll' -or $_.Name -in @('ffmpeg.exe','runtime-manifest.json','ffmpeg-build-config.txt') } | Copy-Item -Destination $stage
+    $runtimeDirectory = Join-Path $repo 'runtime'
+    $runtimeFiles = @(Get-Content (Join-Path $runtimeDirectory 'runtime-files.json') -Raw | ConvertFrom-Json)
+    foreach ($file in $runtimeFiles + @('runtime-manifest.json','runtime-files.json','ffmpeg-build-config.txt')) {
+        if ([IO.Path]::GetFileName($file) -ne $file) { throw 'Invalid runtime payload filename' }
+        Copy-Item -LiteralPath (Join-Path $runtimeDirectory $file) -Destination $stage
+    }
     Copy-Item -LiteralPath (Join-Path $repo 'packaging/Windows-Integration.ps1') -Destination $stage
     Copy-Item -LiteralPath (Join-Path $repo 'packaging/VideoPlayer.nsi') -Destination (Join-Path $stage 'installer-source.nsi')
     Copy-Item -LiteralPath (Join-Path $repo 'LICENSE'), (Join-Path $repo 'THIRD_PARTY_NOTICES.md') -Destination $stage
@@ -41,9 +49,24 @@ try {
     $nsisLicenses = Join-Path $stage 'licenses/nsis'
     New-Item -ItemType Directory -Force -Path $nsisLicenses | Out-Null
     Copy-Item -LiteralPath $nsisCopyright -Destination (Join-Path $nsisLicenses 'COPYING')
-    if (Test-Path (Join-Path $repo 'runtime/sources')) { Copy-Item -LiteralPath (Join-Path $repo 'runtime/sources') -Destination (Join-Path $stage 'sources') -Recurse }
+    $sourceDirectory = Join-Path $runtimeDirectory 'sources'
+    if (Test-Path -LiteralPath $sourceDirectory) {
+        if (@($runtimePins.assets | Where-Object { !$_.sourceBundleComplete }).Count) {
+            Copy-Item -LiteralPath $sourceDirectory -Destination (Join-Path $stage 'sources') -Recurse
+        } else {
+            $sourceManifest = Join-Path $sourceDirectory 'corresponding-sources.json'
+            $sourceReport = Get-Content -LiteralPath $sourceManifest -Raw | ConvertFrom-Json
+            $stagedSources = Join-Path $stage 'sources'
+            New-Item -ItemType Directory -Force -Path $stagedSources | Out-Null
+            Copy-Item -LiteralPath $sourceManifest -Destination $stagedSources
+            foreach ($archive in @($sourceReport.runtimes | ForEach-Object { $_.archives } | Sort-Object file -Unique)) {
+                if ([IO.Path]::GetFileName($archive.file) -ne $archive.file) { throw 'Invalid corresponding source archive filename' }
+                Copy-Item -LiteralPath (Join-Path $sourceDirectory $archive.file) -Destination $stagedSources
+            }
+        }
+    }
     if ($ForRelease) {
-        & (Join-Path $PSScriptRoot 'Test-ReleaseGate.ps1') -AcceptanceFile $AcceptanceFile -Version $version -StageDirectory $stage
+        & (Join-Path $PSScriptRoot 'Test-ReleaseGate.ps1') -AcceptanceFile $AcceptanceFile -Version $version -StageDirectory $stage -Channel $Channel
     }
     $hashes = Get-ChildItem -LiteralPath $stage -Recurse -File | Sort-Object FullName | ForEach-Object {
         '{0}  {1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.FullName.Substring($stage.Length + 1).Replace('\','/')

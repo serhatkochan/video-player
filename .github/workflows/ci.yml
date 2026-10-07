@@ -28,6 +28,9 @@ jobs:
       - name: Dependency license download regression
         shell: pwsh
         run: ./scripts/Test-RustNotices.ps1
+      - name: Release policy regression
+        shell: pwsh
+        run: ./scripts/Test-ReleaseGateRegression.ps1
       - name: Build development installer
         shell: pwsh
         env:

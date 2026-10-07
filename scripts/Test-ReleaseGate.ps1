@@ -1,5 +1,10 @@
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$AcceptanceFile, [Parameter(Mandatory)][string]$Version, [Parameter(Mandatory)][string]$StageDirectory)
+param(
+    [Parameter(Mandatory)][string]$AcceptanceFile,
+    [Parameter(Mandatory)][string]$Version,
+    [Parameter(Mandatory)][string]$StageDirectory,
+    [ValidateSet('stable','preview')][string]$Channel = 'stable'
+)
 $ErrorActionPreference = 'Stop'
 if (!(Test-Path -LiteralPath $AcceptanceFile)) { throw 'A completed hardware/clean-Windows acceptance attestation is required for a public release' }
 $report = Get-Content -LiteralPath $AcceptanceFile -Raw | ConvertFrom-Json
@@ -12,7 +17,17 @@ if ($currentCommit -ne $report.testedCommit) {
 }
 & git -C (Split-Path $PSScriptRoot -Parent) diff --quiet HEAD -- . ':(exclude)docs/acceptance/**'
 if ($LASTEXITCODE -ne 0) { throw 'Uncommitted source changes cannot be released using an older acceptance report' }
-foreach ($case in @('cleanWindows11','vlcCoexistence','defaultAppThumbnails','codecMatrix','hdr10PhysicalDisplay','sdrToneMapping','displaySwitching','subtitleAndAudio','corruptMediaIsolation','installUpgradeUninstall','performanceMeasured')) {
+$hardwareCases = @('cleanWindows11','vlcCoexistence','defaultAppThumbnails','codecMatrix','hdr10PhysicalDisplay','sdrToneMapping','displaySwitching','subtitleAndAudio','corruptMediaIsolation','installUpgradeUninstall','performanceMeasured')
+$requiredCases = $hardwareCases
+if ($Channel -eq 'stable' -and $report.channel -and $report.channel -ne 'stable') { throw 'A preview attestation cannot authorize a stable release' }
+if ($Channel -eq 'preview') {
+    if ($report.channel -ne 'preview' -or !$report.limitations) { throw 'A preview must explicitly describe its remaining hardware acceptance limits' }
+    $requiredCases = @('automatedQuality','runtimeSmoke','thumbnailWorkerSmoke','codecSamplePlayback','performanceMeasured')
+    foreach ($case in $hardwareCases) {
+        if ($report.results.$case -notin @('pass','not-tested')) { throw "Preview hardware status must be explicit: $case" }
+    }
+}
+foreach ($case in $requiredCases) {
     if ($report.results.$case -ne 'pass') { throw "Acceptance requirement has not passed: $case" }
 }
 $rustNotices = Get-Content (Join-Path $StageDirectory 'licenses/rust/dependency-index.json') -Raw | ConvertFrom-Json
@@ -33,4 +48,4 @@ foreach ($asset in $runtimeManifest.assets) {
         if ((Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant() -ne $archive.sha256) { throw "Source checksum mismatch: $($archive.file)" }
     }
 }
-Write-Host 'Public release acceptance and corresponding source gates passed.'
+Write-Host "Public $Channel release acceptance and corresponding source gates passed."
