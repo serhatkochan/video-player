@@ -1,0 +1,1126 @@
+{
+  "schema_version": 1,
+  "measured_at_utc": "2026-10-07T20:52:31.2297631Z",
+  "system": {
+    "os": "Microsoft Windows 11 Pro",
+    "build": "26200",
+    "logical_processors": 32,
+    "cpu": [
+      {
+        "Name": "13th Gen Intel(R) Core(TM) i9-13900K",
+        "NumberOfCores": 24,
+        "NumberOfLogicalProcessors": 32
+      }
+    ],
+    "gpu": [
+      {
+        "Name": "NVIDIA GeForce RTX 4080",
+        "DriverVersion": "32.0.15.9186"
+      }
+    ],
+    "physical_memory_gib": 31.71
+  },
+  "media": {
+    "file": "h264-1080p30.mp4",
+    "bytes": 59821563,
+    "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+  },
+  "conditions": {
+    "measured_trials": 7,
+    "discarded_warmups_per_scenario": 1,
+    "cache": "warm OS and file cache; not flushed",
+    "trial_order": "alternating player order",
+    "resource_window_seconds": [
+      2,
+      5
+    ],
+    "cpu_normalization": "process CPU seconds / elapsed seconds / all logical processors * 100",
+    "memory": "process working set and private bytes; excludes GPU VRAM",
+    "window_metric": "launch until MainWindowHandle becomes nonzero; not first painted UI or video frame",
+    "resume": "fresh byte-identical media alias for each playback trial; same alias passed to all measured players; benchmark aliases may be added to Video Player local history",
+    "ui": "windowed real GUI; different interface sizes and layouts; optional mpv autofit=1100x720",
+    "vlc_config": "workspace portable copy; ignores VLC core configuration; personal profile untouched",
+    "mpv_config": "optional standalone player; no user configuration or external scripts; gpu-next D3D11 context forced, hardware decoding auto-safe; these are test settings rather than its defaults",
+    "instrumentation": "Video Player smoke mode; VLC loopback RC and optional mpv named pipe remain loaded but are queried after resource sampling; VLC file logger enabled only in discarded playback warmup",
+    "hardware_validation": "Video Player smoke and optional mpv hwdec-current report every trial; VLC D3D11VA log checked in discarded playback warmup, same decoder settings used in measured trials",
+    "scope": "CPU and memory comparison on one computer and one media file; does not compare first frame, seek latency, visual quality, HDR, 4K or 8K"
+  },
+  "sources": [
+    "https://github.com/videolan/vlc/blob/3.0.23/src/win32/dirs.c",
+    "https://github.com/videolan/vlc/blob/3.0.23/modules/control/oldrc.c",
+    "https://github.com/videolan/vlc/blob/3.0.23/modules/codec/avcodec/video.c",
+    "https://mpv.io/manual/master/#json-ipc",
+    "https://mpv.io/installation/"
+  ],
+  "players": {
+    "video_player": {
+      "file": "video-player.exe",
+      "version": "0.1.0",
+      "sha256": "66cde8dcd4d3196a5bb6260a0df555d7e7d7e6fccc9686ce6779acfb306a6863",
+      "dependency_sha256": {
+        "libmpv-2.dll": "7197de27964f34c141d7e349776c420e20d74ca9e79dfb482345231d0627da97"
+      },
+      "scenarios": {
+        "idle": {
+          "warmup": {
+            "trial": 0,
+            "window_created_ms": 412.5381,
+            "cpu_machine_percent": 0.1141,
+            "working_set_mib": 163.5716,
+            "private_memory_mib": 384.5726,
+            "sample_count": 47,
+            "sample_duration_seconds": 2.9959,
+            "media_alias": null,
+            "playback_evidence": {
+              "codec": "",
+              "hwdec": "",
+              "position_seconds": 0.0
+            }
+          },
+          "trials": [
+            {
+              "trial": 1,
+              "window_created_ms": 34.4409,
+              "cpu_machine_percent": 0.0658,
+              "working_set_mib": 157.6862,
+              "private_memory_mib": 388.0703,
+              "sample_count": 38,
+              "sample_duration_seconds": 2.9689,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            },
+            {
+              "trial": 2,
+              "window_created_ms": 30.3724,
+              "cpu_machine_percent": 0.1469,
+              "working_set_mib": 154.8288,
+              "private_memory_mib": 385.9636,
+              "sample_count": 42,
+              "sample_duration_seconds": 2.9921,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            },
+            {
+              "trial": 3,
+              "window_created_ms": 39.3564,
+              "cpu_machine_percent": 0.1314,
+              "working_set_mib": 154.5005,
+              "private_memory_mib": 385.7954,
+              "sample_count": 38,
+              "sample_duration_seconds": 2.9718,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            },
+            {
+              "trial": 4,
+              "window_created_ms": 62.5922,
+              "cpu_machine_percent": 0.1125,
+              "working_set_mib": 154.2098,
+              "private_memory_mib": 385.1979,
+              "sample_count": 43,
+              "sample_duration_seconds": 3.0382,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            },
+            {
+              "trial": 5,
+              "window_created_ms": 39.2549,
+              "cpu_machine_percent": 0.0809,
+              "working_set_mib": 154.4814,
+              "private_memory_mib": 385.2817,
+              "sample_count": 39,
+              "sample_duration_seconds": 3.0179,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            },
+            {
+              "trial": 6,
+              "window_created_ms": 47.2396,
+              "cpu_machine_percent": 0.0642,
+              "working_set_mib": 154.318,
+              "private_memory_mib": 385.631,
+              "sample_count": 44,
+              "sample_duration_seconds": 3.0435,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            },
+            {
+              "trial": 7,
+              "window_created_ms": 32.4829,
+              "cpu_machine_percent": 0.0648,
+              "working_set_mib": 154.4634,
+              "private_memory_mib": 385.7585,
+              "sample_count": 39,
+              "sample_duration_seconds": 3.0145,
+              "media_alias": null,
+              "playback_evidence": {
+                "codec": "",
+                "hwdec": "",
+                "position_seconds": 0.0
+              }
+            }
+          ],
+          "summary": {
+            "window_created_ms": {
+              "count": 7,
+              "median": 39.2549,
+              "min": 30.3724,
+              "max": 62.5922
+            },
+            "cpu_machine_percent": {
+              "count": 7,
+              "median": 0.0809,
+              "min": 0.0642,
+              "max": 0.1469
+            },
+            "working_set_mib": {
+              "count": 7,
+              "median": 154.4814,
+              "min": 154.2098,
+              "max": 157.6862
+            },
+            "private_memory_mib": {
+              "count": 7,
+              "median": 385.7585,
+              "min": 385.1979,
+              "max": 388.0703
+            }
+          }
+        },
+        "playback": {
+          "warmup": {
+            "trial": 0,
+            "window_created_ms": 32.1603,
+            "cpu_machine_percent": 0.1932,
+            "working_set_mib": 245.732,
+            "private_memory_mib": 524.9107,
+            "sample_count": 40,
+            "sample_duration_seconds": 3.0324,
+            "media_alias": {
+              "file": "synthetic-9f46434a0ad04d6fa4969c70a7509f52.mp4",
+              "bytes": 59821563,
+              "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+            },
+            "playback_evidence": {
+              "codec": "h264",
+              "hwdec": "d3d11va",
+              "position_seconds": 5.766666666666667
+            }
+          },
+          "trials": [
+            {
+              "trial": 1,
+              "window_created_ms": 23.4399,
+              "cpu_machine_percent": 0.1938,
+              "working_set_mib": 245.1542,
+              "private_memory_mib": 524.3805,
+              "sample_count": 44,
+              "sample_duration_seconds": 3.0229,
+              "media_alias": {
+                "file": "synthetic-1db1e44e576143ee8e09ca2b03ae8951.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.766666666666667
+              }
+            },
+            {
+              "trial": 2,
+              "window_created_ms": 45.3656,
+              "cpu_machine_percent": 0.1615,
+              "working_set_mib": 243.6034,
+              "private_memory_mib": 524.6137,
+              "sample_count": 42,
+              "sample_duration_seconds": 3.0232,
+              "media_alias": {
+                "file": "synthetic-f41db5a303134c90940e5bdd98bca0df.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.766666666666667
+              }
+            },
+            {
+              "trial": 3,
+              "window_created_ms": 28.6956,
+              "cpu_machine_percent": 0.1956,
+              "working_set_mib": 243.5095,
+              "private_memory_mib": 524.6442,
+              "sample_count": 42,
+              "sample_duration_seconds": 2.9955,
+              "media_alias": {
+                "file": "synthetic-87870c67c52045ed8e1a7e8d7bccb325.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.766666666666667
+              }
+            },
+            {
+              "trial": 4,
+              "window_created_ms": 35.1672,
+              "cpu_machine_percent": 0.2281,
+              "working_set_mib": 244.7408,
+              "private_memory_mib": 523.7659,
+              "sample_count": 45,
+              "sample_duration_seconds": 2.997,
+              "media_alias": {
+                "file": "synthetic-a44cc954abf546c180b23037a586acc9.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.766666666666667
+              }
+            },
+            {
+              "trial": 5,
+              "window_created_ms": 24.174,
+              "cpu_machine_percent": 0.1312,
+              "working_set_mib": 244.5497,
+              "private_memory_mib": 526.2701,
+              "sample_count": 47,
+              "sample_duration_seconds": 2.9784,
+              "media_alias": {
+                "file": "synthetic-273ce0329b884674af16f7a63d845987.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.766666666666667
+              }
+            },
+            {
+              "trial": 6,
+              "window_created_ms": 28.4812,
+              "cpu_machine_percent": 0.3045,
+              "working_set_mib": 243.5282,
+              "private_memory_mib": 523.673,
+              "sample_count": 39,
+              "sample_duration_seconds": 3.0469,
+              "media_alias": {
+                "file": "synthetic-6688e43e9f4b4a13a9c26fab4b28e8fa.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.6
+              }
+            },
+            {
+              "trial": 7,
+              "window_created_ms": 29.5129,
+              "cpu_machine_percent": 0.2479,
+              "working_set_mib": 243.9047,
+              "private_memory_mib": 523.2552,
+              "sample_count": 47,
+              "sample_duration_seconds": 2.9544,
+              "media_alias": {
+                "file": "synthetic-5e06c7279e2342d5a0b23f3e93d8dbac.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": 5.566666666666666
+              }
+            }
+          ],
+          "summary": {
+            "window_created_ms": {
+              "count": 7,
+              "median": 28.6956,
+              "min": 23.4399,
+              "max": 45.3656
+            },
+            "cpu_machine_percent": {
+              "count": 7,
+              "median": 0.1956,
+              "min": 0.1312,
+              "max": 0.3045
+            },
+            "working_set_mib": {
+              "count": 7,
+              "median": 243.9047,
+              "min": 243.5095,
+              "max": 245.1542
+            },
+            "private_memory_mib": {
+              "count": 7,
+              "median": 524.3805,
+              "min": 523.2552,
+              "max": 526.2701
+            }
+          }
+        }
+      }
+    },
+    "vlc": {
+      "file": "vlc.exe",
+      "version": "3.0.23",
+      "sha256": "bfa5740f028a8f310ca01c779bbc5f2f1b435c41539c54de592f715bb0c10389",
+      "dependency_sha256": {
+        "libvlc.dll": "8ae9f16a72441f43fb4ae8f72c843736726e067ea4a8def2646748631cc4e872",
+        "libvlccore.dll": "d3475b834dd3eb77910f37f71b0341d358bcbdda5b9f04cc4a3a8e2be1bc8e35",
+        "plugins/codec/libavcodec_plugin.dll": "ded0566aef7b4e9a527cdfeb12f92b9a3b2736b824b687071359244979ee02c7",
+        "plugins/video_output/libdirect3d11_plugin.dll": "c1ba837963b15835645ab157dc8efb63e1083d211f4d74010237a3e87d7f0ce8"
+      },
+      "scenarios": {
+        "idle": {
+          "warmup": {
+            "trial": 0,
+            "window_created_ms": 873.2125,
+            "cpu_machine_percent": 0.0,
+            "working_set_mib": 35.1172,
+            "private_memory_mib": 9.5625,
+            "sample_count": 40,
+            "sample_duration_seconds": 2.986,
+            "media_alias": null,
+            "playback_evidence": {}
+          },
+          "trials": [
+            {
+              "trial": 1,
+              "window_created_ms": 129.2249,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 35.4258,
+              "private_memory_mib": 9.5195,
+              "sample_count": 47,
+              "sample_duration_seconds": 3.043,
+              "media_alias": null,
+              "playback_evidence": {}
+            },
+            {
+              "trial": 2,
+              "window_created_ms": 131.6052,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 35.4336,
+              "private_memory_mib": 9.5352,
+              "sample_count": 46,
+              "sample_duration_seconds": 3.0104,
+              "media_alias": null,
+              "playback_evidence": {}
+            },
+            {
+              "trial": 3,
+              "window_created_ms": 161.3342,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 35.418,
+              "private_memory_mib": 9.543,
+              "sample_count": 40,
+              "sample_duration_seconds": 3.0128,
+              "media_alias": null,
+              "playback_evidence": {}
+            },
+            {
+              "trial": 4,
+              "window_created_ms": 147.6786,
+              "cpu_machine_percent": 0.0651,
+              "working_set_mib": 37.5703,
+              "private_memory_mib": 9.5742,
+              "sample_count": 42,
+              "sample_duration_seconds": 2.998,
+              "media_alias": null,
+              "playback_evidence": {}
+            },
+            {
+              "trial": 5,
+              "window_created_ms": 139.886,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 35.4297,
+              "private_memory_mib": 9.5508,
+              "sample_count": 48,
+              "sample_duration_seconds": 2.9994,
+              "media_alias": null,
+              "playback_evidence": {}
+            },
+            {
+              "trial": 6,
+              "window_created_ms": 132.5862,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 35.1133,
+              "private_memory_mib": 9.5,
+              "sample_count": 39,
+              "sample_duration_seconds": 3.0412,
+              "media_alias": null,
+              "playback_evidence": {}
+            },
+            {
+              "trial": 7,
+              "window_created_ms": 119.404,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 35.4219,
+              "private_memory_mib": 9.543,
+              "sample_count": 40,
+              "sample_duration_seconds": 2.9494,
+              "media_alias": null,
+              "playback_evidence": {}
+            }
+          ],
+          "summary": {
+            "window_created_ms": {
+              "count": 7,
+              "median": 132.5862,
+              "min": 119.404,
+              "max": 161.3342
+            },
+            "cpu_machine_percent": {
+              "count": 7,
+              "median": 0.0,
+              "min": 0.0,
+              "max": 0.0651
+            },
+            "working_set_mib": {
+              "count": 7,
+              "median": 35.4258,
+              "min": 35.1133,
+              "max": 37.5703
+            },
+            "private_memory_mib": {
+              "count": 7,
+              "median": 9.543,
+              "min": 9.5,
+              "max": 9.5742
+            }
+          }
+        },
+        "playback": {
+          "warmup": {
+            "trial": 0,
+            "window_created_ms": 342.9894,
+            "cpu_machine_percent": 0.4011,
+            "working_set_mib": 146.492,
+            "private_memory_mib": 154.5997,
+            "sample_count": 39,
+            "sample_duration_seconds": 3.0431,
+            "media_alias": {
+              "file": "synthetic-9f46434a0ad04d6fa4969c70a7509f52.mp4",
+              "bytes": 59821563,
+              "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+            },
+            "playback_evidence": {
+              "codec": "h264",
+              "position_seconds": [
+                2,
+                3
+              ],
+              "duration_seconds": 60,
+              "hwdec": "d3d11va",
+              "hardware_decoder_log": "Using D3D11VA (NVIDIA GeForce RTX 4080, vendor 10de(NVIDIA), device 2704, revision a1) for hardware decoding",
+              "hardware_decoder_log_sha256": "513e9237dbb40f7439f4ac9334106e24bb97e392271c24b41919b7096ad2a30d"
+            }
+          },
+          "trials": [
+            {
+              "trial": 1,
+              "window_created_ms": 131.0965,
+              "cpu_machine_percent": 0.325,
+              "working_set_mib": 173.6143,
+              "private_memory_mib": 183.0085,
+              "sample_count": 48,
+              "sample_duration_seconds": 3.005,
+              "media_alias": {
+                "file": "synthetic-1db1e44e576143ee8e09ca2b03ae8951.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  5
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            },
+            {
+              "trial": 2,
+              "window_created_ms": 124.307,
+              "cpu_machine_percent": 0.0663,
+              "working_set_mib": 170.0696,
+              "private_memory_mib": 180.493,
+              "sample_count": 38,
+              "sample_duration_seconds": 2.946,
+              "media_alias": {
+                "file": "synthetic-f41db5a303134c90940e5bdd98bca0df.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  6
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            },
+            {
+              "trial": 3,
+              "window_created_ms": 158.2429,
+              "cpu_machine_percent": 0.1461,
+              "working_set_mib": 143.8075,
+              "private_memory_mib": 157.9509,
+              "sample_count": 41,
+              "sample_duration_seconds": 3.0079,
+              "media_alias": {
+                "file": "synthetic-87870c67c52045ed8e1a7e8d7bccb325.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  5
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            },
+            {
+              "trial": 4,
+              "window_created_ms": 141.5415,
+              "cpu_machine_percent": 0.0645,
+              "working_set_mib": 164.9954,
+              "private_memory_mib": 176.9201,
+              "sample_count": 42,
+              "sample_duration_seconds": 3.0279,
+              "media_alias": {
+                "file": "synthetic-a44cc954abf546c180b23037a586acc9.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  5
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            },
+            {
+              "trial": 5,
+              "window_created_ms": 125.7925,
+              "cpu_machine_percent": 0.0822,
+              "working_set_mib": 170.9612,
+              "private_memory_mib": 184.5646,
+              "sample_count": 42,
+              "sample_duration_seconds": 2.9685,
+              "media_alias": {
+                "file": "synthetic-273ce0329b884674af16f7a63d845987.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  6
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            },
+            {
+              "trial": 6,
+              "window_created_ms": 152.0793,
+              "cpu_machine_percent": 0.1803,
+              "working_set_mib": 168.5467,
+              "private_memory_mib": 178.5424,
+              "sample_count": 45,
+              "sample_duration_seconds": 2.9797,
+              "media_alias": {
+                "file": "synthetic-6688e43e9f4b4a13a9c26fab4b28e8fa.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  5
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            },
+            {
+              "trial": 7,
+              "window_created_ms": 128.5222,
+              "cpu_machine_percent": 0.0489,
+              "working_set_mib": 171.108,
+              "private_memory_mib": 182.4795,
+              "sample_count": 39,
+              "sample_duration_seconds": 2.9958,
+              "media_alias": {
+                "file": "synthetic-5e06c7279e2342d5a0b23f3e93d8dbac.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "codec": "h264",
+                "position_seconds": [
+                  4,
+                  6
+                ],
+                "duration_seconds": 60,
+                "hwdec": "verified in discarded warmup only"
+              }
+            }
+          ],
+          "summary": {
+            "window_created_ms": {
+              "count": 7,
+              "median": 131.0965,
+              "min": 124.307,
+              "max": 158.2429
+            },
+            "cpu_machine_percent": {
+              "count": 7,
+              "median": 0.0822,
+              "min": 0.0489,
+              "max": 0.325
+            },
+            "working_set_mib": {
+              "count": 7,
+              "median": 170.0696,
+              "min": 143.8075,
+              "max": 173.6143
+            },
+            "private_memory_mib": {
+              "count": 7,
+              "median": 180.493,
+              "min": 157.9509,
+              "max": 184.5646
+            }
+          }
+        }
+      }
+    },
+    "mpv": {
+      "file": "mpv.exe",
+      "version": "mpv v0.41.0-1104-geb0ee1031",
+      "sha256": "f82858cfe2b99cc9effcc5451ade1136540e5288cabc52378bcc424e6bfaced7",
+      "dependency_sha256": {},
+      "scenarios": {
+        "idle": {
+          "warmup": {
+            "trial": 0,
+            "window_created_ms": 357.6275,
+            "cpu_machine_percent": 0.0,
+            "working_set_mib": 99.9885,
+            "private_memory_mib": 104.8164,
+            "sample_count": 42,
+            "sample_duration_seconds": 3.035,
+            "media_alias": null,
+            "playback_evidence": {
+              "version": "mpv v0.41.0-1104-geb0ee1031",
+              "idle_active": true
+            }
+          },
+          "trials": [
+            {
+              "trial": 1,
+              "window_created_ms": 235.6176,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 106.9914,
+              "private_memory_mib": 109.5059,
+              "sample_count": 44,
+              "sample_duration_seconds": 3.0092,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            },
+            {
+              "trial": 2,
+              "window_created_ms": 208.147,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 100.0312,
+              "private_memory_mib": 104.9648,
+              "sample_count": 48,
+              "sample_duration_seconds": 3.0313,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            },
+            {
+              "trial": 3,
+              "window_created_ms": 266.6167,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 100.2969,
+              "private_memory_mib": 104.8906,
+              "sample_count": 45,
+              "sample_duration_seconds": 3.0266,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            },
+            {
+              "trial": 4,
+              "window_created_ms": 194.972,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 99.9805,
+              "private_memory_mib": 104.8242,
+              "sample_count": 44,
+              "sample_duration_seconds": 2.9939,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            },
+            {
+              "trial": 5,
+              "window_created_ms": 202.5975,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 100.0703,
+              "private_memory_mib": 104.9961,
+              "sample_count": 43,
+              "sample_duration_seconds": 2.9571,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            },
+            {
+              "trial": 6,
+              "window_created_ms": 195.7489,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 100.0703,
+              "private_memory_mib": 104.7383,
+              "sample_count": 43,
+              "sample_duration_seconds": 3.039,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            },
+            {
+              "trial": 7,
+              "window_created_ms": 187.4947,
+              "cpu_machine_percent": 0.0,
+              "working_set_mib": 99.9688,
+              "private_memory_mib": 104.8672,
+              "sample_count": 47,
+              "sample_duration_seconds": 2.9497,
+              "media_alias": null,
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "idle_active": true
+              }
+            }
+          ],
+          "summary": {
+            "window_created_ms": {
+              "count": 7,
+              "median": 202.5975,
+              "min": 187.4947,
+              "max": 266.6167
+            },
+            "cpu_machine_percent": {
+              "count": 7,
+              "median": 0.0,
+              "min": 0.0,
+              "max": 0.0
+            },
+            "working_set_mib": {
+              "count": 7,
+              "median": 100.0703,
+              "min": 99.9688,
+              "max": 106.9914
+            },
+            "private_memory_mib": {
+              "count": 7,
+              "median": 104.8906,
+              "min": 104.7383,
+              "max": 109.5059
+            }
+          }
+        },
+        "playback": {
+          "warmup": {
+            "trial": 0,
+            "window_created_ms": 216.6476,
+            "cpu_machine_percent": 0.1309,
+            "working_set_mib": 159.4168,
+            "private_memory_mib": 202.1248,
+            "sample_count": 43,
+            "sample_duration_seconds": 2.9843,
+            "media_alias": {
+              "file": "synthetic-9f46434a0ad04d6fa4969c70a7509f52.mp4",
+              "bytes": 59821563,
+              "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+            },
+            "playback_evidence": {
+              "version": "mpv v0.41.0-1104-geb0ee1031",
+              "codec": "h264",
+              "hwdec": "d3d11va",
+              "position_seconds": [
+                4.766667,
+                4.966667
+              ],
+              "duration_seconds": 60.0,
+              "speed": 1.0
+            }
+          },
+          "trials": [
+            {
+              "trial": 1,
+              "window_created_ms": 189.5229,
+              "cpu_machine_percent": 0.2318,
+              "working_set_mib": 160.6687,
+              "private_memory_mib": 202.2273,
+              "sample_count": 46,
+              "sample_duration_seconds": 2.9492,
+              "media_alias": {
+                "file": "synthetic-1db1e44e576143ee8e09ca2b03ae8951.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.766667,
+                  4.966667
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            },
+            {
+              "trial": 2,
+              "window_created_ms": 198.1691,
+              "cpu_machine_percent": 0.1471,
+              "working_set_mib": 162.1126,
+              "private_memory_mib": 203.2593,
+              "sample_count": 43,
+              "sample_duration_seconds": 2.9883,
+              "media_alias": {
+                "file": "synthetic-f41db5a303134c90940e5bdd98bca0df.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.766667,
+                  4.966667
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            },
+            {
+              "trial": 3,
+              "window_created_ms": 196.7061,
+              "cpu_machine_percent": 0.0963,
+              "working_set_mib": 158.2232,
+              "private_memory_mib": 201.5495,
+              "sample_count": 47,
+              "sample_duration_seconds": 3.0424,
+              "media_alias": {
+                "file": "synthetic-87870c67c52045ed8e1a7e8d7bccb325.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.8,
+                  5.0
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            },
+            {
+              "trial": 4,
+              "window_created_ms": 205.2988,
+              "cpu_machine_percent": 0.1134,
+              "working_set_mib": 158.7401,
+              "private_memory_mib": 202.0115,
+              "sample_count": 46,
+              "sample_duration_seconds": 3.0143,
+              "media_alias": {
+                "file": "synthetic-a44cc954abf546c180b23037a586acc9.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.766667,
+                  4.966667
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            },
+            {
+              "trial": 5,
+              "window_created_ms": 208.6435,
+              "cpu_machine_percent": 0.1944,
+              "working_set_mib": 158.9291,
+              "private_memory_mib": 201.9439,
+              "sample_count": 39,
+              "sample_duration_seconds": 3.0144,
+              "media_alias": {
+                "file": "synthetic-273ce0329b884674af16f7a63d845987.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.766667,
+                  4.933333
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            },
+            {
+              "trial": 6,
+              "window_created_ms": 224.1458,
+              "cpu_machine_percent": 0.1144,
+              "working_set_mib": 159.7521,
+              "private_memory_mib": 202.6971,
+              "sample_count": 47,
+              "sample_duration_seconds": 2.9877,
+              "media_alias": {
+                "file": "synthetic-6688e43e9f4b4a13a9c26fab4b28e8fa.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.5,
+                  4.7
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            },
+            {
+              "trial": 7,
+              "window_created_ms": 188.5175,
+              "cpu_machine_percent": 0.1459,
+              "working_set_mib": 158.1031,
+              "private_memory_mib": 201.4338,
+              "sample_count": 39,
+              "sample_duration_seconds": 3.0119,
+              "media_alias": {
+                "file": "synthetic-5e06c7279e2342d5a0b23f3e93d8dbac.mp4",
+                "bytes": 59821563,
+                "sha256": "cfb288446f67e89279ed49156df893d667ca4b3099c403e18cf6ecd37912ef8a"
+              },
+              "playback_evidence": {
+                "version": "mpv v0.41.0-1104-geb0ee1031",
+                "codec": "h264",
+                "hwdec": "d3d11va",
+                "position_seconds": [
+                  4.6,
+                  4.8
+                ],
+                "duration_seconds": 60.0,
+                "speed": 1.0
+              }
+            }
+          ],
+          "summary": {
+            "window_created_ms": {
+              "count": 7,
+              "median": 198.1691,
+              "min": 188.5175,
+              "max": 224.1458
+            },
+            "cpu_machine_percent": {
+              "count": 7,
+              "median": 0.1459,
+              "min": 0.0963,
+              "max": 0.2318
+            },
+            "working_set_mib": {
+              "count": 7,
+              "median": 158.9291,
+              "min": 158.1031,
+              "max": 162.1126
+            },
+            "private_memory_mib": {
+              "count": 7,
+              "median": 202.0115,
+              "min": 201.4338,
+              "max": 203.2593
+            }
+          }
+        }
+      }
+    }
+  }
+}

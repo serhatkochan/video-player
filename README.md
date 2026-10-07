@@ -25,7 +25,7 @@
 ## İndir
 
 <p align="center">
-  <strong><a href="https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe">Video Player 0.1.0 kurulum EXE’si (yayın hazırlığında)</a></strong><br />
+  <strong><a href="https://github.com/serhatkochan/video-player/releases/download/v0.1.0/Video-Player-0.1.0-windows-x64-setup.exe">Video Player 0.1.0 kurulum EXE’sini indir</a></strong><br />
   Windows 11 · Intel/AMD 64 bit
 </p>
 
@@ -33,9 +33,9 @@
   <a href="https://github.com/serhatkochan/video-player/releases">Tüm sürümler ve sürüm notları</a>
 </p>
 
-Kurulum EXE’sini indirip çalıştırman yeterli. Kaynak kodu indirmen, Rust kurman veya uygulamayı derlemen gerekmez. Oynatma için gerekli medya bileşenleri kurulum paketinde bulunur.
+Kurulum EXE’sini indirip çalıştırman yeterli. Kaynak kodu indirmen, Rust kurman veya uygulamayı derlemen gerekmez. Oynatma ve küçük resim üretimi için gerekli medya bileşenleri pakete dahildir; kurulum ve yerel dosya oynatma çevrimdışı çalışır. API anahtarı veya hesap gerekmez.
 
-> **Yayın durumu:** Kaynak kod MIT lisansıyla açıktır. 0.1.0 kurulum EXE’si henüz genel indirmeye açılmadı; bağlantı paket yayımlandığında çalışacaktır. Paketli medya bağımlılıklarının tam kaynak dağıtımı ve donanım kabul testleri tamamlanıyor. Ayrıntılar [yayın koşullarında](docs/dependencies.md#corresponding-sources-and-publishing) bulunur.
+> **0.1.0 ön sürüm:** Örnek dosyalarda oynatma, yerel küçük resim üretimi ve otomatik kontroller tamamlandı. Temiz Windows kurulumu, Explorer’daki gerçek sağlayıcı kaydı ve varsayılan uygulama geçişi, fiziksel HDR ekranlar ve tüm donanım/format matrisi henüz doğrulanmadı. Test kapsamı ve kalan çalışmalar [kabul raporunda](docs/acceptance/0.1.0.json) kayıtlıdır.
 
 ---
 
@@ -59,16 +59,32 @@ Hız metriklerini gerçek oynatma altyapısıyla ölçüyoruz. Aşağıdaki sonu
 
 | Ölçüm | Medyan |
 | :--- | ---: |
-| Yerel video yüzeyi ve libmpv başlatma | **13,8 ms** |
-| Dosya yükleme → ilk oynatma ilerlemesi bildirimi | **324 ms** |
-| 30. saniyeye hassas sarma konumunun onayı | **13,1 ms** |
-| Boşta RAM, çalışma kümesi | **160,5 MiB** |
-| 1080p oynatmada RAM, çalışma kümesi | **311,3 MiB** |
-| 1080p oynatmada CPU, toplam makine kapasitesi | **%0,195** |
+| Yerel video yüzeyi ve libmpv başlatma | **11,1 ms** |
+| Dosya yükleme → ilk oynatma ilerlemesi bildirimi | **325,2 ms** |
+| 30. saniyeye hassas sarma konumunun onayı | **20,5 ms** |
+| Boşta RAM, çalışma kümesi | **154,6 MiB** |
+| 1080p oynatmada RAM, çalışma kümesi | **243,8 MiB** |
+| 1080p oynatmada CPU, toplam makine kapasitesi | **%0,246** |
 
 Motor süreleri, libmpv’nin durum bildirimlerini ölçer; ilk görüntünün ekrana düşme süresi değildir. RAM değerleri GPU VRAM’ini içermez. Sonuçlar tek cihaz ve tek örneğe aittir.
 
 [Ölçüm yöntemi ve tekrar çalıştırma](docs/performance.md) · [Yedi denemenin ham sonuçları](docs/benchmarks/0.1.0-windows-x64.json)
+
+### VLC ve mpv ile karşılaştırma
+
+Aynı cihazda aynı 1080p H.264/AAC dosyasını Video Player, VLC ve bağımsız mpv ile oynattık. Her oynatıcı için bir ısınma denemesini ayırıp yedi denemenin medyanını aldık. Aşağıdaki değerler video açılarak başlatılan süreçlere aittir.
+
+| Oynatıcı | Pencere tanıtıcısı oluşması | Oynatmada RAM | Oynatmada CPU |
+| :--- | ---: | ---: | ---: |
+| **Video Player 0.1.0** | **28,7 ms** | 243,9 MiB | %0,196 |
+| VLC 3.0.23 | 131,1 ms | 170,1 MiB | %0,082 |
+| mpv 0.41.0, geliştirme derlemesi | 198,2 ms | 158,9 MiB | %0,146 |
+
+Bu testte Video Player’ın pencere tanıtıcısı daha erken oluştu; VLC ve mpv daha az RAM ve CPU kullandı. Pencere metriği ilk görüntünün çizilmesini veya oynatmaya hazır olma süresini ölçmez. Tek cihaz ve tek dosya, bütün videolar için hız sıralaması oluşturmaz.
+
+Önbellekler sıcaktı, oynatıcı sırası dönüşümlüydü ve arayüzlerin boyutları farklıydı. mpv’de D3D11 ve güvenli otomatik donanım çözme test için seçildi; VLC kişisel ayarlardan ayrı bir taşınabilir kopyayla çalıştı. Donanım çözmeyi Video Player ve mpv’de her denemede, VLC’de yalnızca ayrılan ısınma denemesinin günlüğünde doğruladık. CPU makinenin toplam kapasitesine göre, RAM çalışma kümesi olarak ölçüldü; GPU belleği dahil değildir.
+
+[Karşılaştırma yöntemi](docs/performance.md#oynatıcı-karşılaştırması) · [Yedi denemenin karşılaştırma sonuçları](docs/benchmarks/0.1.0-player-comparison.json)
 
 ---
 
