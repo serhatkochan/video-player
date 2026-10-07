@@ -8,8 +8,15 @@ $Work = (Resolve-Path -LiteralPath $Work).Path
 $Out = (Resolve-Path -LiteralPath $Out).Path
 $reproduction = Join-Path $Work 'reproduction'
 New-Item -ItemType Directory -Force -Path $reproduction | Out-Null
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Initialize-Compiler.ps1'),(Join-Path $PSScriptRoot 'Build-SharedFfmpeg.ps1'),$PSCommandPath -Destination $reproduction
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'wraps') -Destination $reproduction -Recurse -Force
+foreach ($scriptFile in @((Join-Path $PSScriptRoot 'Initialize-Compiler.ps1'),(Join-Path $PSScriptRoot 'Build-SharedFfmpeg.ps1'),$PSCommandPath)) {
+    $destination = Join-Path $reproduction ([IO.Path]::GetFileName($scriptFile))
+    if ([IO.Path]::GetFullPath($scriptFile) -ne [IO.Path]::GetFullPath($destination)) {
+        Copy-Item -LiteralPath $scriptFile -Destination $destination -Force
+    }
+}
+if ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'wraps')) -ne [IO.Path]::GetFullPath((Join-Path $reproduction 'wraps'))) {
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'wraps') -Destination $reproduction -Recurse -Force
+}
 $records = foreach ($directory in Get-ChildItem -LiteralPath $Work -Recurse -Directory -Force | Where-Object Name -eq '.git') {
     $source = Split-Path $directory.FullName -Parent
     [pscustomobject]@{
@@ -18,7 +25,9 @@ $records = foreach ($directory in Get-ChildItem -LiteralPath $Work -Recurse -Dir
         revision = (& git -C $source rev-parse HEAD | Out-String).Trim()
     }
 }
-$records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $Work 'source-revisions.json') -Encoding utf8NoBOM
+if (@($records).Count) {
+    $records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $Work 'source-revisions.json') -Encoding utf8NoBOM
+}
 $name = 'video-player-ffmpeg-windows-x64'
 Compress-Archive -Path (Join-Path $Out '*') -DestinationPath (Join-Path (Split-Path $Out -Parent) "$name.zip") -Force
 Move-Item -LiteralPath (Join-Path (Split-Path $Out -Parent) "$name.zip") -Destination $Out -Force

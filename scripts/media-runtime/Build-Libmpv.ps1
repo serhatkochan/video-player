@@ -176,17 +176,29 @@ foreach ($record in $records) {
         Set-Content -LiteralPath (Join-Path (Join-Path $Work $record.path) 'SOURCE-REVISION.json') -Encoding utf8NoBOM
 }
 if (!$records) {
-    $records = Get-ChildItem -LiteralPath $Work -Recurse -File -Filter 'SOURCE-REVISION.json' | ForEach-Object {
-        $source = Split-Path $_.FullName -Parent
-        $retained = Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json
-        [pscustomobject]@{path=$source.Substring($Work.Length + 1).Replace('\','/'); origin=$retained.url; revision=$retained.revision}
+    $existingInventory = Join-Path $Work 'source-revisions.json'
+    if (Test-Path -LiteralPath $existingInventory -PathType Leaf) {
+        $records = @(Get-Content -LiteralPath $existingInventory -Raw | ConvertFrom-Json)
+    } else {
+        $records = Get-ChildItem -LiteralPath $Work -Recurse -File -Filter 'SOURCE-REVISION.json' | ForEach-Object {
+            $source = Split-Path $_.FullName -Parent
+            $retained = Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json
+            [pscustomobject]@{path=$source.Substring($Work.Length + 1).Replace('\','/'); origin=$retained.url; revision=$retained.revision}
+        }
     }
 }
 $records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $Work 'source-revisions.json') -Encoding utf8NoBOM
 $reproduction = Join-Path $Work 'reproduction'
 New-Item -ItemType Directory -Force -Path $reproduction | Out-Null
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Build-Libmpv.ps1'),(Join-Path $PSScriptRoot 'sources.json') -Destination $reproduction
-Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'wraps') -Destination $reproduction -Recurse -Force
+foreach ($scriptFile in @((Join-Path $PSScriptRoot 'Build-Libmpv.ps1'),(Join-Path $PSScriptRoot 'sources.json'))) {
+    $destination = Join-Path $reproduction ([IO.Path]::GetFileName($scriptFile))
+    if ([IO.Path]::GetFullPath($scriptFile) -ne [IO.Path]::GetFullPath($destination)) {
+        Copy-Item -LiteralPath $scriptFile -Destination $destination -Force
+    }
+}
+if ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'wraps')) -ne [IO.Path]::GetFullPath((Join-Path $reproduction 'wraps'))) {
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'wraps') -Destination $reproduction -Recurse -Force
+}
 Copy-Item -LiteralPath (Join-Path $recipe 'LICENSE') -Destination (Join-Path $licenses 'recipe-LGPL-2.1.txt')
 $buildInfo = Join-Path $package.FullName 'BUILD-INFO.txt'
 $buildInfoText = Get-Content -LiteralPath $buildInfo -Raw

@@ -23,6 +23,15 @@ function Invoke-Native {
 
 function Get-PinnedSource {
     param([string]$Directory, [string]$Url, [string]$Revision)
+    $sourceMarker = Join-Path $Directory 'SOURCE-REVISION.json'
+    if (-not (Test-Path -LiteralPath (Join-Path $Directory '.git')) -and
+        (Test-Path -LiteralPath $sourceMarker)) {
+        $retained = Get-Content -LiteralPath $sourceMarker -Raw | ConvertFrom-Json
+        if ($retained.url -cne $Url -or $retained.revision -cne $Revision) {
+            throw "Retained source revision mismatch: $Url"
+        }
+        return
+    }
     if (-not (Test-Path -LiteralPath (Join-Path $Directory '.git'))) {
         Invoke-Native git @('init', $Directory)
         Invoke-Native git @('-C', $Directory, 'remote', 'add', 'origin', $Url)
@@ -36,6 +45,8 @@ function Get-PinnedSource {
     & git -C $Directory submodule status --recursive |
         Set-Content -LiteralPath (Join-Path $Directory 'SOURCE-SUBMODULES.txt') -Encoding utf8
     if ($LASTEXITCODE -ne 0) { throw "Submodule inventory failed: $Url" }
+    @{ url = $Url; revision = $Revision } | ConvertTo-Json |
+        Set-Content -LiteralPath $sourceMarker -Encoding utf8
 }
 
 foreach ($tool in @('git', 'meson', 'ninja', 'clang', 'clang++')) {
@@ -198,8 +209,11 @@ Copy-Item -LiteralPath (Join-Path $zlibSource.FullName 'README') -Destination (J
 
 $ffmpegExe = Join-Path $Out 'ffmpeg.exe'
 $licenseText = (& $ffmpegExe -hide_banner -L 2>&1 | Out-String)
-if ($LASTEXITCODE -ne 0 -or $licenseText -notmatch 'Lesser General Public License.*version 2\.1') {
-    throw 'FFmpeg LGPL 2.1 license assertion failed'
+$licenseExitCode = $LASTEXITCODE
+$normalizedLicense = $licenseText -replace '\s+', ' '
+if ($licenseExitCode -ne 0 -or $normalizedLicense -notmatch 'Lesser General Public License.*\bversion 2\.1\b') {
+    Write-Host $licenseText
+    throw "FFmpeg LGPL 2.1 license assertion failed (exit code $licenseExitCode)"
 }
 $filters = (& $ffmpegExe -hide_banner -filters 2>&1 | Out-String)
 if ($LASTEXITCODE -ne 0 -or $filters -notmatch '\bzscale\b' -or $filters -notmatch '\btonemap\b') {

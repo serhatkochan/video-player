@@ -10,7 +10,8 @@ if ($LASTEXITCODE -ne 0) { throw 'FFmpeg runtime did not start' }
 if ($version -match '--enable-gpl|--enable-nonfree|--enable-libx264|--enable-libx265|--enable-libfdk-aac|-D(?:gpl|nonfree)=enabled') { throw 'GPL/nonfree FFmpeg is not permitted in this package' }
 if ($version -notmatch 'libavformat\s+62\.' -or $version -notmatch 'libavfilter\s+11\.') { throw 'Unexpected FFmpeg ABI' }
 $license = (& $ffmpeg -hide_banner -L 2>&1 | Out-String)
-if ($LASTEXITCODE -ne 0 -or $license -notmatch 'Lesser General Public License[\s\S]*version (?:2\.1|3)') { throw 'FFmpeg must identify itself as an LGPL build' }
+$licenseText = [regex]::Replace($license, '\s+', ' ')
+if ($LASTEXITCODE -ne 0 -or $licenseText -notmatch 'Lesser General Public License.*version (?:2\.1|3)') { throw 'FFmpeg must identify itself as an LGPL build' }
 $filters = (& $ffmpeg -hide_banner -filters 2>&1 | Out-String)
 if ($LASTEXITCODE -ne 0 -or $filters -notmatch '\bzscale\b' -or $filters -notmatch '\btonemap\b') { throw 'HDR thumbnail filters are missing' }
 $audit = Join-Path $RuntimeDirectory 'ffmpeg-build-config.txt'
