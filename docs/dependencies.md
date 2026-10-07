@@ -1,6 +1,6 @@
 # Windows build and dependency provenance
 
-Requirements: Windows 11 x64, Rust 1.98+, the MSVC x64 build tools/Windows SDK, Windows PowerShell, and `tar.exe`. License collection reads exact upstream Git revisions from public GitHub APIs; optionally set `GH_TOKEN` to avoid shared anonymous rate limits. No separately installed codec pack is required. The build uses immutable dependency pins in `packaging/runtime-manifest.json`.
+Requirements: Windows 11 x64, Rust 1.98+, the MSVC x64 build tools/Windows SDK, Windows PowerShell, and `tar.exe`. No separately installed codec pack is required. The build downloads checksum-pinned media archives and corresponding sources using `packaging/runtime-manifest.json`. Application users need neither these development tools nor credentials; the installer contains all runtime files and works offline.
 
 ```powershell
 ./scripts/Get-Runtime.ps1
@@ -10,25 +10,27 @@ Requirements: Windows 11 x64, Rust 1.98+, the MSVC x64 build tools/Windows SDK, 
 
 `Build-Windows` compiles the workspace and thumbnail worker, audits FFmpeg, collects Rust notices, stages payloads, and compiles an NSIS installer under `dist/`. Use `-SkipCargo` only after a successful release build. `-NsisPath` can select an already installed compiler. Portable NSIS is unpacked into ignored `tools/`; no global tool installation is made.
 
-`runtime/` contains `libmpv-2.dll`, FFmpeg 8.1 shared DLLs (`avcodec-62`, `avformat-62`, `avutil-60`, `avfilter-11`, `swscale-9`, `swresample-6`, plus upstream `avdevice-62`), the audited `ffmpeg.exe`, matching headers under `include/`, upstream notices under `licenses/`, and the pin manifest. The installer places the runtime DLLs beside `video-player.exe`, `video_player_thumbnail.dll`, and `thumbnail-worker.exe`.
+`runtime/` contains `libmpv-2.dll`, `spirv-cross-c-shared.dll`, FFmpeg 8.1 shared DLLs (`avcodec-62`, `avformat-62`, `avutil-60`, `avfilter-11`, `swscale-9`, `swresample-6`), the audited `ffmpeg.exe`, matching headers under `include/`, upstream notices under `licenses/`, and the pin manifest. The installer stages only the pinned archive's runtime-file whitelist, beside `video-player.exe`, `video_player_thumbnail.dll`, and `thumbnail-worker.exe`. Rust and media builds use the static MSVC runtime so a separate Visual C++ redistributable is unnecessary.
 
 | Runtime | Pinned upstream artifact | Verification |
 | --- | --- | --- |
-| libmpv | [zhongfly LGPL x64 build, 2026-10-07](https://github.com/zhongfly/mpv-winbuild/releases/tag/2026-10-07-eb0ee10315) | Archive SHA-256, exact mpv commit, `-Dgpl=false` runtime configuration |
-| FFmpeg | [BtbN monthly LGPL shared 8.1 build, 2026-09-30](https://github.com/BtbN/FFmpeg-Builds/releases/tag/autobuild-2026-09-30-13-08) | Archive SHA-256, shared ABI, no GPL/nonfree flags, zscale/tonemap filters |
+| libmpv | Project build from pinned mpv `e470f8986e7d544c7ccf526e987b9f869f0b5904`, based on [the retained LGPL recipe](https://github.com/peschuster/libmpv-build/tree/9541f361ec25075e267f38f41ed460d204cd7f13) | Archive SHA-256, exact source revisions, D3D11/Shaderc/SPIRV-Cross, GPL disabled, no extra CRT DLLs |
+| FFmpeg | Project shared build from [FFmpeg 8.1 Meson port](https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/ff04763ef7cd858605cb118c5626070498f2c49c) | Archive SHA-256, matching shared ABI and headers, LGPL 2.1, zscale/tonemap, dav1d, no GPL/nonfree flags |
 | NSIS | [Official NSIS 3.11 checksum](https://sourceforge.net/projects/nsis/files/NSIS%203/3.11/nsis-3.11.zip/download) via [Tauri mirror](https://github.com/tauri-apps/binary-releases/releases/tag/nsis-3.11) | Byte-identical official archive SHA-256 |
 
-The LGPL variant omits GPL software encoders such as x264/x265; H.264 and HEVC **decoding** remains supported. FFmpeg's `--enable-version3` selects LGPLv3. libmpv's static dependency contents must be audited with its corresponding source bundle. GPL-enabled system FFmpeg builds must never be copied into the distribution.
+The LGPL variant omits GPL software encoders such as x264/x265; H.264 and HEVC **decoding** remains supported. The separate FFmpeg DLLs are LGPL-2.1-or-later. The combined libmpv DLL is distributed under LGPL-3.0-or-later, using the later-version permission for compatibility with its Apache-2.0 shaderc/SPIRV-Tools components. GPL-enabled system FFmpeg builds must never be copied into the distribution.
 
 ## Corresponding sources and publishing
 
-The current pins are verified for development. Exact mpv, both FFmpeg revisions, and all three builder/toolchain source snapshots are supplied by `Get-SourceSeeds.ps1`, with hashes in `packaging/source-seeds-manifest.json`. **Public binary redistribution is blocked:** every statically incorporated external dependency and exact build input must still be supplied and audited. libmpv's rolling build dependencies need all exact revisions and applicable patches. FFmpeg also needs every statically incorporated external dependency, not just the FFmpeg Git checkout. Its [builder recipes](https://github.com/BtbN/FFmpeg-Builds) and mpv's [LGPL patch](https://github.com/zhongfly/mpv-winbuild/blob/f5eae188817041f0b2acb1ecd6fb5f095a0f4def/compile-lgpl-libmpv.patch) help reproduce the builds.
+The media build scripts under `scripts/media-runtime/` retain the exact source trees, recursive submodules, downloaded WrapDB source/patch archives, applied patches, component license notices, build flags and reproduction recipes. No rolling binary dependency is used. `sources.json` and vendored wrap hashes record inputs. General compiler tools and unmodified Windows system libraries are not statically incorporated third-party media source dependencies.
 
-Preserve each verified binary archive before upstream retention expires. Gather exact corresponding sources, copyright notices, patches, and build scripts from the recorded build run, or rebuild the runtimes from fully pinned sources with a retained download cache. Review the complete collection and publish a source bundle on GitHub. Add its immutable URL/hash to `sourceBundles` in the pin manifest; `Get-Runtime` will stage it into `runtime/sources/` for local and CI builds.
+The release retains binary and complete source archives on GitHub Releases. Their immutable URLs and hashes are in the runtime manifest; `Get-Runtime` verifies them and extracts corresponding sources into `runtime/sources/`. Source retention and license review remain mandatory for every runtime update. Legacy `Get-SourceSeeds.ps1` snapshots alone cannot authorize binary redistribution.
 
 The source bundle must contain `corresponding-sources.json` with schema version 1, `complete: true`, `reviewedBy`, and one `runtimes` entry per media runtime. Each entry includes `id`, the pinned `binaryArchiveSha256`, `includesAllStaticDependencies: true`, `includesBuildScripts: true`, and `archives` with relative `file`/`sha256` pairs. These assertions require an actual source audit; setting them without complete inputs does not satisfy the license.
 
-Run `Build-Windows.ps1 -ForRelease -AcceptanceFile <completed-report.json>` only after that source review and the hardware tests in [acceptance.md](acceptance.md). It refuses release builds if either gate is incomplete. The GitHub workflow creates a reviewable draft only after these gates pass. No accepted public release is claimed by the development installer.
+Run `Build-Windows.ps1 -ForRelease -AcceptanceFile <completed-report.json>` for a fully accepted stable build, or add `-Channel preview` for a clearly declared preview with passing automated checks and explicitly untested hardware scenarios. Both require complete corresponding sources. See [acceptance.md](acceptance.md). The optional GitHub workflow creates a reviewable draft after these gates pass; the same commands work locally.
+
+To rebuild the media libraries rather than download them, prepare PowerShell 7, Visual Studio C++/Clang, CMake, Meson 1.12.1, Ninja 1.13.0, NASM and pkg-config, then run `Build-Libmpv.ps1` and `Pack-SharedFfmpeg.ps1`. Extracted source archives also retain these recipes and source revision markers. The media workflow runs these commands on Windows; it is not part of application installation or playback.
 
 ## Registry and DLL lifetime
 

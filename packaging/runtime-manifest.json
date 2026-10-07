@@ -1,37 +1,53 @@
 {
   "schemaVersion": 1,
   "architecture": "x86_64",
-  "ffmpegAbi": { "avcodec": 62, "avformat": 62, "avutil": 60, "avfilter": 11, "swscale": 9, "swresample": 6 },
-  "sourceBundles": [],
+  "ffmpegAbi": {
+    "avcodec": 62,
+    "avformat": 62,
+    "avutil": 60,
+    "avfilter": 11,
+    "swscale": 9,
+    "swresample": 6
+  },
+  "sourceBundles": [
+    {
+      "file": "Video-Player-media-corresponding-sources.zip",
+      "url": "https://github.com/serhatkochan/video-player/releases/download/runtime-20261007/Video-Player-media-corresponding-sources.zip",
+      "sha256": "c83eb1e0a1203bde2ab6dea57558b6c3ba95837c10404106973d72654af9440e"
+    }
+  ],
   "assets": [
     {
       "id": "libmpv",
-      "file": "mpv-dev-lgpl-x86_64-20261007-git-eb0ee10315.7z",
-      "url": "https://github.com/zhongfly/mpv-winbuild/releases/download/2026-10-07-eb0ee10315/mpv-dev-lgpl-x86_64-20261007-git-eb0ee10315.7z",
-      "sha256": "654284c4c8653c40092b0cd6ab52784b42711ee6305135a960f04b5481cdb2d7",
-      "license": "LGPL-2.1-or-later with statically linked LGPL-3.0-or-later FFmpeg",
-      "upstreamCommit": "eb0ee1031590b3f369a5b783e8aa91eeaaded7e6",
-      "sourceUrl": "https://github.com/mpv-player/mpv/tree/eb0ee1031590b3f369a5b783e8aa91eeaaded7e6",
-      "buildRun": "https://github.com/zhongfly/mpv-winbuild/actions/runs/37618063222",
-      "buildRepository": "https://github.com/zhongfly/mpv-winbuild",
-      "buildCommit": "f5eae188817041f0b2acb1ecd6fb5f095a0f4def",
-      "sourceBundleComplete": false,
-      "retentionNote": "Upstream deletes builds after 30 days. Preserve this verified archive with the complete corresponding sources before publishing. Never silently update this pin."
+      "file": "libmpv-e470f8986e-windows-x64.zip",
+      "url": "https://github.com/serhatkochan/video-player/releases/download/runtime-20261007/libmpv-e470f8986e-windows-x64.zip",
+      "sha256": "39dffd1333db1462a8a3975f8cd0fc680a42a8f53b3cbf150c45f1e8d10b5f91",
+      "license": "LGPL-3.0-or-later",
+      "upstreamCommit": "e470f8986e7d544c7ccf526e987b9f869f0b5904",
+      "sourceRepository": "https://github.com/mpv-player/mpv.git",
+      "sourceUrl": "https://github.com/mpv-player/mpv/tree/e470f8986e7d544c7ccf526e987b9f869f0b5904",
+      "buildRun": "https://github.com/serhatkochan/video-player/actions/runs/37679699506",
+      "buildRepository": "https://github.com/serhatkochan/video-player",
+      "buildCommit": "8012fa4c7242c313eda6334792ebd153f6dad0b6",
+      "buildVariant": "Windows x64 Clang /MT; D3D11 and D3D11VA; shaderc and SPIRV-Cross",
+      "sourceBundleComplete": true,
+      "retentionNote": "Verified original CI binary archive and reviewed full corresponding-source archive are retained in this project release. Source repack changes reproduction metadata only."
     },
     {
       "id": "ffmpeg",
-      "file": "ffmpeg-n8.1.3-9-g29e619e767-win64-lgpl-shared-8.1.zip",
-      "url": "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-30-13-08/ffmpeg-n8.1.3-9-g29e619e767-win64-lgpl-shared-8.1.zip",
-      "sha256": "3e47bda1607740550141e37c0e49d1e5182b34699f15adfd137ee266d346811a",
-      "license": "LGPL-3.0-or-later",
-      "upstreamCommit": "29e619e767cde9045a75c29bc9a8278ae7b3a98b",
-      "sourceUrl": "https://github.com/FFmpeg/FFmpeg/tree/29e619e767cde9045a75c29bc9a8278ae7b3a98b",
-      "buildRepository": "https://github.com/BtbN/FFmpeg-Builds",
-      "buildCommit": "6c9aec5fc9a72ec3abedd1fa84db141fa18cf52b",
-      "buildRun": "https://github.com/BtbN/FFmpeg-Builds/actions/runs/36713993443",
-      "buildVariant": "win64 lgpl-shared 8.1",
-      "sourceBundleComplete": false,
-      "retentionNote": "Monthly build retained upstream for two years. Complete corresponding source includes all statically linked dependencies and exact build inputs."
+      "file": "video-player-ffmpeg-windows-x64.zip",
+      "url": "https://github.com/serhatkochan/video-player/releases/download/runtime-20261007/video-player-ffmpeg-windows-x64.zip",
+      "sha256": "01e9a408e3bfed967ba08022a7b777497976406a0827ce82d4154309257df2d5",
+      "license": "LGPL-2.1-or-later",
+      "upstreamCommit": "ff04763ef7cd858605cb118c5626070498f2c49c",
+      "sourceRepository": "https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg.git",
+      "sourceUrl": "https://gitlab.freedesktop.org/gstreamer/meson-ports/ffmpeg/-/tree/ff04763ef7cd858605cb118c5626070498f2c49c",
+      "buildRun": "https://github.com/serhatkochan/video-player/actions/runs/37680156707",
+      "buildRepository": "https://github.com/serhatkochan/video-player",
+      "buildCommit": "8c7261bfe837743c8c1460e84772416817c5324e",
+      "buildVariant": "Windows x64 LGPL shared FFmpeg 8.1 Meson port; Clang /MT; dav1d and zimg",
+      "sourceBundleComplete": true,
+      "retentionNote": "Verified original CI binary and full corresponding-source archives are retained in this project release. GPL, version3 and nonfree configure options are disabled."
     }
   ]
 }

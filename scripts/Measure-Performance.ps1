@@ -45,7 +45,7 @@ function Measure-Player([string]$Scenario, [int]$Trial) {
         $arguments += '"' + $freshMedia + '"'
     }
     $clock = [Diagnostics.Stopwatch]::StartNew()
-    $process = Start-Process -FilePath $Executable -ArgumentList $arguments -PassThru -WindowStyle Hidden
+    $process = Start-Process -FilePath $Executable -ArgumentList $arguments -PassThru -WindowStyle Normal
     $windowMs = $null
     $cpuStart = $null
     $sampleStart = 0.0
@@ -70,7 +70,7 @@ function Measure-Player([string]$Scenario, [int]$Trial) {
             }
             Start-Sleep -Milliseconds $(if ($null -eq $windowMs) { 5 } else { 50 })
         }
-        if (!$process.HasExited) { throw 'The player smoke mode did not self-close within 15 seconds' }
+        if (!$process.HasExited) { throw ("The visible player smoke mode did not self-close: scenario={0}, trial={1}, elapsed_seconds={2:N3}, window_created_ms={3}, cpu_machine_percent={4}, memory_samples={5}" -f $Scenario,$Trial,$clock.Elapsed.TotalSeconds,$windowMs,$cpuPercent,$workingSet.Count) }
         if ($process.ExitCode -ne 0 -or !(Test-Path -LiteralPath $smokeFile)) { throw 'Player smoke mode failed' }
         $smoke = Get-Content -LiteralPath $smokeFile -Raw | ConvertFrom-Json
         if (!$smoke.engine_started -or !$smoke.native_surface -or $smoke.error) { throw 'Player engine or native surface failed' }
@@ -135,6 +135,7 @@ $report = [ordered]@{
         resource_window_seconds=@(2,5); cpu_normalization='process CPU seconds / elapsed seconds / logical processors * 100'
         memory='process working set and private bytes; excludes GPU VRAM'
         window_metric='process launch until MainWindowHandle becomes nonzero; not first painted frame'
+        gui_launch='Normal visible GUI; Hidden can throttle redraw/event delivery and delay the smoke timer beyond its expected six seconds'
     }
     gui=$scenarios; native=$native
 }

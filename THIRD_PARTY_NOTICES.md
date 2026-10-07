@@ -4,8 +4,8 @@ Video Player's original Rust application and Explorer integration code are MIT l
 
 ## Media runtime
 
-- **mpv / libmpv:** copyright mpv contributors. The pinned LGPL build disables GPL components (`-Dgpl=false`). mpv is LGPL-2.1-or-later; this Windows DLL also statically incorporates LGPL-3.0-or-later FFmpeg and other third-party libraries. See `licenses/mpv/Copyright` and the license texts.
-- **FFmpeg:** copyright FFmpeg developers. The pinned `win64-lgpl-shared-8.1` build is LGPL-3.0-or-later (`--enable-version3`), dynamically exposed through replaceable `av*.dll` / `sw*.dll` libraries. It has no `--enable-gpl` or `--enable-nonfree`. See `licenses/ffmpeg/LICENSE.txt` and `ffmpeg-build-config.txt`.
+- **mpv / libmpv:** copyright mpv contributors. GPL components are disabled. The combined Windows DLL is distributed under LGPL-3.0-or-later, using mpv and FFmpeg's later-version permission for compatibility with the Apache-2.0 shaderc and SPIRV-Tools components. See `licenses/mpv/Copyright`, `licenses/libmpv/COMBINED-LICENSE.txt`, and the preserved component license texts.
+- **FFmpeg:** copyright FFmpeg developers. The separate FFmpeg 8.1 shared runtime is LGPL-2.1-or-later. GPL, version3 and nonfree build options are disabled; `av*.dll` / `sw*.dll` remain replaceable. The archive also preserves the BSD dav1d, WTFPL zimg and zlib notices under `licenses/media/`. See the exact license texts and `ffmpeg-build-config.txt`.
 - FFmpeg/libmpv's statically included dependencies retain their individual notices and source obligations. A complete corresponding source bundle, including exact dependency sources and build scripts, is mandatory for public binary redistribution.
 
 Runtime DLLs are replaceable; Video Player does not restrict modification, debugging, or reverse engineering of the LGPL components. Modified compatible DLLs can replace the adjacent originals in an installed version directory. Back up original files and close the application/Explorer before replacing loaded DLLs.

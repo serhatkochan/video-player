@@ -63,6 +63,16 @@ try {
                 if ([IO.Path]::GetFileName($archive.file) -ne $archive.file) { throw 'Invalid corresponding source archive filename' }
                 Copy-Item -LiteralPath (Join-Path $sourceDirectory $archive.file) -Destination $stagedSources
             }
+            foreach ($audit in @($sourceReport.runtimes | ForEach-Object { $_.auditFiles } | Sort-Object -Unique)) {
+                if (!$audit) { continue }
+                if ([IO.Path]::IsPathRooted($audit) -or $audit -notmatch '^audits[/\\]') { throw 'Invalid source audit filename' }
+                $auditPath = [IO.Path]::GetFullPath((Join-Path $sourceDirectory $audit))
+                $auditPrefix = [IO.Path]::GetFullPath((Join-Path $sourceDirectory 'audits')).TrimEnd('\') + '\'
+                if (!$auditPath.StartsWith($auditPrefix, [StringComparison]::OrdinalIgnoreCase)) { throw 'Invalid source audit filename' }
+                $auditDestination = Join-Path $stagedSources $audit
+                New-Item -ItemType Directory -Force -Path (Split-Path $auditDestination -Parent) | Out-Null
+                Copy-Item -LiteralPath $auditPath -Destination $auditDestination
+            }
         }
     }
     if ($ForRelease) {
