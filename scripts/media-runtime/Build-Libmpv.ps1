@@ -89,6 +89,16 @@ if ($LASTEXITCODE -ne 0) { throw 'Pinned libmpv recipe failed' }
 $package = Get-ChildItem -LiteralPath $Out -Directory | Where-Object Name -like 'libmpv-*' | Select-Object -First 1
 if (!$package) { throw 'libmpv binary package not found' }
 $licenses = Join-Path $package.FullName 'LICENSES'
+foreach ($name in @('COPYING.LGPLv3','COPYING.GPLv3')) {
+    Copy-Item -LiteralPath (Join-Path $mpv "subprojects/ffmpeg/$name") -Destination $licenses -Force
+}
+@'
+The combined libmpv DLL is distributed under LGPL-3.0-or-later.
+mpv and FFmpeg are LGPL-2.1-or-later; their later-version permission is used
+for compatibility with the Apache-2.0 shaderc and SPIRV-Tools components.
+See COPYING.LGPLv3, COPYING.GPLv3 and each component's preserved license notices.
+Video Player's original application code remains MIT licensed.
+'@ | Set-Content -LiteralPath (Join-Path $licenses 'COMBINED-LICENSE.txt') -Encoding utf8NoBOM
 foreach ($entry in @(@('shaderc',$shaderc),@('spirv-cross',$cross))) {
     foreach ($file in Get-ChildItem -LiteralPath $entry[1] -Recurse -File | Where-Object { $_.Name -match '^(LICENSE|COPYING|NOTICE)([._-]|$)' }) {
         if ($file.FullName -match '[\\/]\.git[\\/]') { continue }
