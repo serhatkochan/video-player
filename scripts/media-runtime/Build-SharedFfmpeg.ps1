@@ -55,6 +55,32 @@ New-Item -ItemType Directory -Path $subprojects -Force | Out-Null
 
 $dav1d = Join-Path $subprojects 'dav1d'
 Get-PinnedSource $dav1d 'https://code.videolan.org/videolan/dav1d.git' $dav1dRevision
+# NASM searches the working directory before -I paths. FFmpeg's config.asm
+# otherwise shadows dav1d's configuration when dav1d is a nested subproject.
+$dav1dMesonPath = Join-Path $dav1d 'meson.build'
+$dav1dMeson = Get-Content -LiteralPath $dav1dMesonPath -Raw
+$dav1dConfigOld = "configure_file(output: 'config.asm', output_format: 'nasm', configuration: cdata_asm)"
+$dav1dConfigNew = "configure_file(output: 'dav1d-config.asm', output_format: 'nasm', configuration: cdata_asm)"
+if ($dav1dMeson.Contains($dav1dConfigOld)) {
+    $dav1dMeson.Replace($dav1dConfigOld, $dav1dConfigNew) |
+        Set-Content -LiteralPath $dav1dMesonPath -Encoding utf8
+} elseif (-not $dav1dMeson.Contains($dav1dConfigNew)) {
+    throw 'Pinned dav1d NASM configuration declaration changed'
+}
+$dav1dAsmSources = @(Get-ChildItem -LiteralPath (Join-Path $dav1d 'src/x86') -Filter '*.asm' -File)
+if (-not $dav1dAsmSources.Count) { throw 'Pinned dav1d x86 assembly sources missing' }
+$dav1dConfigIncludes = 0
+foreach ($asm in $dav1dAsmSources) {
+    $asmText = Get-Content -LiteralPath $asm.FullName -Raw
+    if ($asmText.Contains('%include "config.asm"')) {
+        $asmText.Replace('%include "config.asm"', '%include "dav1d-config.asm"') |
+            Set-Content -LiteralPath $asm.FullName -Encoding utf8
+        $dav1dConfigIncludes++
+    } elseif ($asmText.Contains('%include "dav1d-config.asm"')) {
+        $dav1dConfigIncludes++
+    }
+}
+if (-not $dav1dConfigIncludes) { throw 'Pinned dav1d assembly configuration includes missing' }
 @"
 [wrap-git]
 directory = dav1d

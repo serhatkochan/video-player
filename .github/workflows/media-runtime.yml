@@ -2,6 +2,13 @@ name: Media runtime
 
 on:
   workflow_dispatch:
+    inputs:
+      component:
+        description: Media component to build
+        type: choice
+        required: true
+        default: all
+        options: [all, libmpv, ffmpeg]
 
 permissions:
   contents: read
@@ -14,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        component: [libmpv, ffmpeg]
+        component: ${{ fromJSON(inputs.component == 'ffmpeg' && '["ffmpeg"]' || inputs.component == 'libmpv' && '["libmpv"]' || '["libmpv","ffmpeg"]') }}
     steps:
       - uses: actions/checkout@v4
       - name: Install build tools

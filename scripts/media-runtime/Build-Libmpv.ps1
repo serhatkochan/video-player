@@ -46,7 +46,7 @@ $env:CXX = 'clang++'
 $env:CC_LD = 'lld-link'
 $env:CXX_LD = 'lld-link'
 $env:WINDRES = 'llvm-rc'
-$base = @('-G','Ninja','-DCMAKE_BUILD_TYPE=Release','-DCMAKE_C_COMPILER=clang','-DCMAKE_CXX_COMPILER=clang++','-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded',"-DCMAKE_INSTALL_PREFIX=$prefix",'-DCMAKE_INSTALL_LIBDIR=lib')
+$base = @('-G','Ninja','-DCMAKE_BUILD_TYPE=Release','-DCMAKE_C_COMPILER=clang','-DCMAKE_CXX_COMPILER=clang++','-DCMAKE_POLICY_DEFAULT_CMP0091=NEW','-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded',"-DCMAKE_INSTALL_PREFIX=$prefix",'-DCMAKE_INSTALL_LIBDIR=lib')
 Invoke-Checked $cmake (@('-S',$shaderc,'-B',(Join-Path $Work 'build-shaderc')) + $base + @('-DSHADERC_SKIP_TESTS=ON','-DSHADERC_SKIP_EXAMPLES=ON','-DSHADERC_SKIP_EXECUTABLES=ON','-DSHADERC_SKIP_COPYRIGHT_CHECK=ON','-DSHADERC_ENABLE_SHARED_CRT=OFF','-DSPIRV_SKIP_TESTS=ON','-DSPIRV_SKIP_EXECUTABLES=ON','-DSHADERC_ENABLE_WERROR_COMPILE=OFF'))
 Invoke-Checked $cmake @('--build',(Join-Path $Work 'build-shaderc'),'--parallel','4')
 Invoke-Checked $cmake @('--install',(Join-Path $Work 'build-shaderc'))
@@ -54,11 +54,42 @@ Copy-Item -LiteralPath (Join-Path $prefix 'lib/pkgconfig/shaderc_combined.pc') -
 Invoke-Checked $cmake (@('-S',$cross,'-B',(Join-Path $Work 'build-spirv-cross')) + $base + @('-DSPIRV_CROSS_SHARED=ON','-DSPIRV_CROSS_STATIC=OFF','-DSPIRV_CROSS_CLI=OFF','-DSPIRV_CROSS_ENABLE_TESTS=OFF','-DSPIRV_CROSS_ENABLE_MSL=OFF','-DSPIRV_CROSS_ENABLE_CPP=OFF','-DSPIRV_CROSS_ENABLE_REFLECT=OFF'))
 Invoke-Checked $cmake @('--build',(Join-Path $Work 'build-spirv-cross'),'--parallel','4')
 Invoke-Checked $cmake @('--install',(Join-Path $Work 'build-spirv-cross'))
+$crossDll = Join-Path $prefix 'bin/spirv-cross-c-shared.dll'
+if (!(Test-Path -LiteralPath $crossDll -PathType Leaf)) { throw 'SPIRV-Cross runtime DLL was not installed' }
+$crossImports = (& dumpbin /nologo /dependents $crossDll | Out-String)
+if ($LASTEXITCODE -ne 0) { throw 'SPIRV-Cross dependency audit failed' }
+if ($crossImports.ToLowerInvariant() -cmatch '(?m)^\s*(vcruntime|msvcp|msvcr)[^\s]*\.dll\s*$') { throw 'SPIRV-Cross unexpectedly requires a Visual C++ redistributable' }
+Write-Host 'SPIRV-Cross: Visual C++ runtime DLL dependencies are absent.'
 $env:PKG_CONFIG_PATH = Join-Path $prefix 'lib/pkgconfig'
 $env:PATH = (Join-Path $prefix 'bin') + ';' + $env:PATH
 $subprojects = Join-Path $mpv 'subprojects'
 New-Item -ItemType Directory -Force -Path $subprojects | Out-Null
 Copy-Item -LiteralPath (Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'wraps') -File).FullName -Destination $subprojects -Force
+$dav1d = Join-Path $subprojects 'dav1d'
+Get-PinnedSource 'dav1d' $dav1d
+# FFmpeg's parent config.asm otherwise shadows dav1d's nested NASM configuration.
+$dav1dMesonPath = Join-Path $dav1d 'meson.build'
+$dav1dMeson = Get-Content -LiteralPath $dav1dMesonPath -Raw
+$dav1dConfigOld = "configure_file(output: 'config.asm', output_format: 'nasm', configuration: cdata_asm)"
+$dav1dConfigNew = "configure_file(output: 'dav1d-config.asm', output_format: 'nasm', configuration: cdata_asm)"
+if ($dav1dMeson.Contains($dav1dConfigOld)) {
+    $dav1dMeson.Replace($dav1dConfigOld,$dav1dConfigNew) | Set-Content -LiteralPath $dav1dMesonPath -Encoding utf8NoBOM
+} elseif (!$dav1dMeson.Contains($dav1dConfigNew)) {
+    throw 'Pinned dav1d NASM configuration declaration changed'
+}
+$dav1dAsmSources = @(Get-ChildItem -LiteralPath (Join-Path $dav1d 'src/x86') -Filter '*.asm' -File)
+if (!$dav1dAsmSources.Count) { throw 'Pinned dav1d x86 assembly sources missing' }
+$dav1dConfigIncludes = 0
+foreach ($asm in $dav1dAsmSources) {
+    $asmText = Get-Content -LiteralPath $asm.FullName -Raw
+    if ($asmText.Contains('%include "config.asm"')) {
+        $asmText.Replace('%include "config.asm"','%include "dav1d-config.asm"') | Set-Content -LiteralPath $asm.FullName -Encoding utf8NoBOM
+        $dav1dConfigIncludes++
+    } elseif ($asmText.Contains('%include "dav1d-config.asm"')) {
+        $dav1dConfigIncludes++
+    }
+}
+if (!$dav1dConfigIncludes) { throw 'Pinned dav1d assembly configuration includes missing' }
 $upstreamPins = Get-Content -LiteralPath (Join-Path $recipe 'sources.json') -Raw | ConvertFrom-Json
 foreach ($name in @('mpv','ffmpeg','libass','libplacebo','dav1d')) { $upstreamPins.$name = $pins.$name }
 $upstreamPins | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $recipe 'sources.json') -Encoding utf8NoBOM
@@ -75,6 +106,7 @@ Replace-Required 'meson wrap update-db' '# Wrap definitions are vendored at fixe
 Replace-Required 'if (-not (Test-Path "subprojects/$wrap.wrap")) { meson wrap install $wrap }' 'if (-not (Test-Path "subprojects/$wrap.wrap")) { throw "Missing pinned wrap: $wrap" }'
 $newline = [char]10
 $continuation = [char]96
+Replace-Required ("            -Dffmpeg:checkasm=disabled $continuation$newline") ''
 Replace-Required '--wrap-mode=forcefallback' ("--wrap-mode=default $continuation$newline            -Dpkg_config_path=$prefixUnix/lib/pkgconfig")
 foreach ($feature in @('libplacebo:d3d11','libplacebo:shaderc','d3d11','shaderc','spirv-cross')) { Replace-Required "-D$feature=disabled" "-D$feature=enabled" }
 $copyExtra = @'
