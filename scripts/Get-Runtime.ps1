@@ -28,7 +28,7 @@ foreach ($asset in $manifest.assets) {
     & tar.exe -xf $archive -C $extract
     if ($LASTEXITCODE -ne 0) { throw "Could not extract $archive with Windows tar.exe" }
     if ($asset.id -eq 'libmpv') {
-        $dll = Get-ChildItem -LiteralPath $extract -Recurse -File | Where-Object Name -in @('libmpv-2.dll','mpv-2.dll') | Select-Object -First 1
+        $dll = Get-ChildItem -LiteralPath $extract -Recurse -File | Where-Object Name -in @('libmpv-2.dll','mpv-2.dll','libmpv.dll','mpv.dll') | Select-Object -First 1
         if (!$dll) { throw 'libmpv archive has no libmpv-2.dll' }
         Copy-PinnedRuntimeFile $dll.FullName 'libmpv-2.dll'
         Get-ChildItem -LiteralPath $dll.DirectoryName -Filter *.dll -File | Where-Object FullName -ne $dll.FullName | ForEach-Object { Copy-PinnedRuntimeFile $_.FullName }
