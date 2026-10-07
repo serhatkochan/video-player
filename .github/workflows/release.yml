@@ -1,0 +1,68 @@
+name: Gated release candidate
+on:
+  workflow_dispatch:
+    inputs:
+      acceptance_file:
+        description: Committed acceptance attestation path
+        required: true
+        default: docs/acceptance/0.1.0.json
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rust toolchain
+        run: rustup toolchain install 1.98.0 --profile minimal --component rustfmt --component clippy
+      - name: Quality gates
+        run: |
+          cargo +1.98.0 fmt --all -- --check
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo +1.98.0 clippy --workspace --all-targets --locked -- -D warnings
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo +1.98.0 test --workspace --locked
+      - name: Build accepted installer
+        shell: pwsh
+        env:
+          ACCEPTANCE_FILE: ${{ inputs.acceptance_file }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rustup default 1.98.0
+          ./scripts/Test-WindowsIntegration.ps1
+          ./scripts/Get-BuildTools.ps1
+          ./scripts/Test-InstallerInitialization.ps1
+          ./scripts/Test-RustNotices.ps1
+          ./scripts/Build-Windows.ps1 -ForRelease -AcceptanceFile $env:ACCEPTANCE_FILE
+      - name: Archive corresponding sources and notices
+        shell: pwsh
+        run: |
+          Compress-Archive -Path dist/stage/sources,dist/stage/licenses,dist/stage/runtime-manifest.json,dist/stage/SHA256SUMS.txt -DestinationPath dist/Video-Player-corresponding-sources.zip
+          Get-ChildItem dist -File | Where-Object { $_.Extension -in '.exe','.zip' } | ForEach-Object { '{0}  {1}' -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $_.Name } | Set-Content dist/SHA256SUMS-release.txt -Encoding ASCII
+      - uses: actions/upload-artifact@v4
+        with:
+          name: accepted-release-candidate
+          path: |
+            dist/Video-Player-*-windows-x64-setup.exe
+            dist/Video-Player-corresponding-sources.zip
+            dist/SHA256SUMS-release.txt
+  draft:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: accepted-release-candidate
+          path: release
+      - name: Create reviewable draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(sed -n 's/^version = "\([0-9.]*\)"/\1/p' Cargo.toml | head -n 1)
+          mapfile -t artifacts < <(rg --files release)
+          gh release create "v$version" "${artifacts[@]}" --target "$GITHUB_SHA" --draft --title "Video Player $version" --notes "Windows x64 release candidate. Hardware acceptance and corresponding source gates passed; review artifacts before publishing."

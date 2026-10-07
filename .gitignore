@@ -1,0 +1,35 @@
+/target/
+/dist/
+/runtime/
+/tools/
+/test-media/
+*.log
+*.pdb
+
+# Yerel yayın hazırlığı ve geliştirme notları
+/publish/
+/docs/superpowers/
+/docs/development-verification.md
+/.codex/
+/.agents/
+/.vscode/
+/.idea/
+
+# Kimlik bilgileri ve özel anahtarlar
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+*.keystore
+.git-credentials
+credentials.json
+secrets.json
+/.aws/
+/.azure/
+/.ssh/
+
+# Windows yerel dosyaları
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,38 @@
+name: Windows CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install 1.98.0 --profile minimal --component rustfmt --component clippy
+      - name: Format
+        run: cargo +1.98.0 fmt --all -- --check
+      - name: Lint
+        run: cargo +1.98.0 clippy --workspace --all-targets --locked -- -D warnings
+      - name: Tests
+        run: cargo +1.98.0 test --workspace --locked
+      - name: Windows integration ownership tests
+        shell: pwsh
+        run: ./scripts/Test-WindowsIntegration.ps1
+      - name: Installer initialization regression
+        shell: pwsh
+        run: |
+          ./scripts/Get-BuildTools.ps1
+          ./scripts/Test-InstallerInitialization.ps1
+      - name: Dependency license download regression
+        shell: pwsh
+        run: ./scripts/Test-RustNotices.ps1
+      - name: Build development installer
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rustup default 1.98.0
+          ./scripts/Build-Windows.ps1
+      # Binary artifacts are published only by the complete-source/acceptance gated release workflow.

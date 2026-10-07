@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "complete": false,
+  "note": "Exact primary source/build recipe snapshots only. All statically linked external dependencies and original build caches are still required.",
+  "assets": [
+    {
+      "id": "mpv",
+      "file": "mpv-eb0ee1031590b3f369a5b783e8aa91eeaaded7e6.zip",
+      "url": "https://codeload.github.com/mpv-player/mpv/zip/eb0ee1031590b3f369a5b783e8aa91eeaaded7e6",
+      "commit": "eb0ee1031590b3f369a5b783e8aa91eeaaded7e6",
+      "sha256": "c8e910f3ea67a71f7db0a722aae9fd6daf7d6af6663a894f5e8767f400002003"
+    },
+    {
+      "id": "ffmpeg-thumbnail",
+      "file": "ffmpeg-thumbnail-29e619e767cde9045a75c29bc9a8278ae7b3a98b.zip",
+      "url": "https://codeload.github.com/FFmpeg/FFmpeg/zip/29e619e767cde9045a75c29bc9a8278ae7b3a98b",
+      "commit": "29e619e767cde9045a75c29bc9a8278ae7b3a98b",
+      "sha256": "69ea98adb1b80aabdbecefdb0b545ff19ebcd7c6fc0cea9dd550b02f5b642a21"
+    },
+    {
+      "id": "ffmpeg-libmpv",
+      "file": "ffmpeg-libmpv-452820cba64711b4a4bc9a4a67645bd1aa188309.zip",
+      "url": "https://codeload.github.com/FFmpeg/FFmpeg/zip/452820cba64711b4a4bc9a4a67645bd1aa188309",
+      "commit": "452820cba64711b4a4bc9a4a67645bd1aa188309",
+      "sha256": "0ecc15ecf74e6e1a700667f35ebe39ae47d14d043fb17eba848c47a5e7757688"
+    },
+    {
+      "id": "mpv-builder",
+      "file": "mpv-builder-f5eae188817041f0b2acb1ecd6fb5f095a0f4def.zip",
+      "url": "https://codeload.github.com/zhongfly/mpv-winbuild/zip/f5eae188817041f0b2acb1ecd6fb5f095a0f4def",
+      "commit": "f5eae188817041f0b2acb1ecd6fb5f095a0f4def",
+      "sha256": "2a65bb98ac4e4a346f13935ca8e7b033a4b883a129e81e5ec044736bd3450b16"
+    },
+    {
+      "id": "mpv-toolchain",
+      "file": "mpv-toolchain-b2856ee6deed6957380b32465f359e67f67fafd8.zip",
+      "url": "https://codeload.github.com/shinchiro/mpv-winbuild-cmake/zip/b2856ee6deed6957380b32465f359e67f67fafd8",
+      "commit": "b2856ee6deed6957380b32465f359e67f67fafd8",
+      "sha256": "e53735af059577abedc5d22928aaa2392fc306c9b07db86d6adbb1e5dd72aa66"
+    },
+    {
+      "id": "ffmpeg-builder",
+      "file": "ffmpeg-builder-6c9aec5fc9a72ec3abedd1fa84db141fa18cf52b.zip",
+      "url": "https://codeload.github.com/BtbN/FFmpeg-Builds/zip/6c9aec5fc9a72ec3abedd1fa84db141fa18cf52b",
+      "commit": "6c9aec5fc9a72ec3abedd1fa84db141fa18cf52b",
+      "sha256": "a3c33d42d85429cf42b93b31d4fad9b186ac343ff66cb9452ecfb47b4bca73d8"
+    }
+  ]
+}

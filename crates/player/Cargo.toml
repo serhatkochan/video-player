@@ -1,0 +1,23 @@
+[package]
+name = "video-player"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+default-run = "video-player"
+
+[dependencies]
+video-player-core = { path = "../core" }
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+libloading.workspace = true
+windows.workspace = true
+windows-core.workspace = true
+eframe = { version = "0.36.1", default-features = false, features = ["default_fonts", "accesskit", "wgpu"] }
+rfd = "0.17.2"
+directories = "6"
+raw-window-handle = "0.6"
+ureq = { version = "3", features = ["json"] }
+open = "5"

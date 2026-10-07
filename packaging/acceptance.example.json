@@ -1,0 +1,20 @@
+{
+  "version": "0.1.0",
+  "tester": "",
+  "testedCommit": "",
+  "testDate": "",
+  "machines": [],
+  "results": {
+    "cleanWindows11": "pending",
+    "vlcCoexistence": "pending",
+    "defaultAppThumbnails": "pending",
+    "codecMatrix": "pending",
+    "hdr10PhysicalDisplay": "pending",
+    "sdrToneMapping": "pending",
+    "displaySwitching": "pending",
+    "subtitleAndAudio": "pending",
+    "corruptMediaIsolation": "pending",
+    "installUpgradeUninstall": "pending",
+    "performanceMeasured": "pending"
+  }
+}
