@@ -382,7 +382,7 @@ impl Engine {
             (10, "eof-reached", FLAG),
             (11, "idle-active", FLAG),
             (12, "hwdec-current", STRING),
-            (13, "video-codec", STRING),
+            (13, "current-tracks/video/codec", STRING),
             (14, "video-target-params", NODE),
         ] {
             let property = CString::new(name)?;
@@ -414,13 +414,17 @@ impl Engine {
     }
 
     fn option(&self, name: &str, value: &str) -> Result<()> {
+        let disabled_script = matches!(name, "ytdl" | "osc") && value == "no";
         let name = CString::new(name)?;
         let value = CString::new(value)?;
         unsafe {
-            self.api.check(
-                (self.api.set_option)(self.handle, name.as_ptr(), value.as_ptr()),
-                &format!("Configure {}", name.to_string_lossy()),
-            )
+            let result = (self.api.set_option)(self.handle, name.as_ptr(), value.as_ptr());
+            // These built-in scripts are absent in runtimes compiled without Lua.
+            if disabled_script && result == -5 {
+                return Ok(());
+            }
+            self.api
+                .check(result, &format!("Configure {}", name.to_string_lossy()))
         }
     }
 
