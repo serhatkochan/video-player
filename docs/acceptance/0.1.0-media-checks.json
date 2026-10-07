@@ -1,0 +1,2682 @@
+{
+  "schema_version": 1,
+  "validated_utc": "2026-10-07T20:57:05.6512622Z",
+  "status": "passed_for_documented_scope",
+  "scope": [
+    "Synthetic files on this existing Windows machine.",
+    "media_probe uses the application libmpv wrapper and native video surface, without the full egui shell.",
+    "COM thumbnails use registration-free IInitializeWithStream/IThumbnailProvider calls; this does not test Explorer registration or surrogate activation.",
+    "Embedded/external subtitle stream presence, new external track selection and switching to a different audio track; visual subtitle styling is not verified."
+  ],
+  "not_tested": [
+    "Clean Windows 11 installation",
+    "VLC association coexistence",
+    "Installer/update/uninstall",
+    "HDR correctness and monitor transitions",
+    "4K/8K performance",
+    "External subtitle UI loading",
+    "VC-1 decoding"
+  ],
+  "fixtures_manifest_sha256": "d8b413859f942bb0de52f969db76b54e0306d8efcee2d7d4f960e355592e8a72",
+  "known_limitations": [
+    {
+      "id": "h264-mp4",
+      "component": "FFmpeg CLI Windows argument encoding",
+      "original_unicode_cli_exit_code": -22,
+      "workaround": "Only the supplementary CLI decode uses an ASCII byte-identical hardlink. Native playback retains the original Unicode path; the COM Unicode-path check uses the original h264-mp4 fixture.",
+      "pinned_meson_port_explanation": "FFmpeg Meson port ff04763ef7cd858605cb118c5626070498f2c49c defaults shell32 to disabled; cmdutils.c enables UTF-16 argv to UTF-8 conversion only with HAVE_COMMANDLINETOARGVW."
+    },
+    {
+      "id": "h264-m4v",
+      "component": "FFmpeg CLI Windows argument encoding",
+      "original_unicode_cli_exit_code": -22,
+      "workaround": "Only the supplementary CLI decode uses an ASCII byte-identical hardlink. Native playback retains the original Unicode path; the COM Unicode-path check uses the original h264-mp4 fixture.",
+      "pinned_meson_port_explanation": "FFmpeg Meson port ff04763ef7cd858605cb118c5626070498f2c49c defaults shell32 to disabled; cmdutils.c enables UTF-16 argv to UTF-8 conversion only with HAVE_COMMANDLINETOARGVW."
+    },
+    {
+      "id": "h264-mkv",
+      "component": "FFmpeg CLI Windows argument encoding",
+      "original_unicode_cli_exit_code": -22,
+      "workaround": "Only the supplementary CLI decode uses an ASCII byte-identical hardlink. Native playback retains the original Unicode path; the COM Unicode-path check uses the original h264-mp4 fixture.",
+      "pinned_meson_port_explanation": "FFmpeg Meson port ff04763ef7cd858605cb118c5626070498f2c49c defaults shell32 to disabled; cmdutils.c enables UTF-16 argv to UTF-8 conversion only with HAVE_COMMANDLINETOARGVW."
+    },
+    {
+      "id": "h264-mov",
+      "component": "FFmpeg CLI Windows argument encoding",
+      "original_unicode_cli_exit_code": -22,
+      "workaround": "Only the supplementary CLI decode uses an ASCII byte-identical hardlink. Native playback retains the original Unicode path; the COM Unicode-path check uses the original h264-mp4 fixture.",
+      "pinned_meson_port_explanation": "FFmpeg Meson port ff04763ef7cd858605cb118c5626070498f2c49c defaults shell32 to disabled; cmdutils.c enables UTF-16 argv to UTF-8 conversion only with HAVE_COMMANDLINETOARGVW."
+    }
+  ],
+  "candidate_artifacts": [
+    {
+      "filename": "ffmpeg.exe",
+      "bytes": 582656,
+      "sha256": "cd3221cd6e4db71f0e32d89ef6bba3e6635d2eef9911dc161dc2f4a0778e6cee"
+    },
+    {
+      "filename": "libmpv-2.dll",
+      "bytes": 40836096,
+      "sha256": "7197de27964f34c141d7e349776c420e20d74ca9e79dfb482345231d0627da97"
+    },
+    {
+      "filename": "avformat-62.dll",
+      "bytes": 2793472,
+      "sha256": "e43cd00329c50090c72265ea3a29de7a0d3ef47d92cb2a3c822262e6382b26d6"
+    },
+    {
+      "filename": "avcodec-62.dll",
+      "bytes": 16413184,
+      "sha256": "55d3640f6fa857af6f94cc58874ced7637c8f1cc19475921f6780eabf8c081c3"
+    },
+    {
+      "filename": "avutil-60.dll",
+      "bytes": 1119232,
+      "sha256": "d4c421b01a6f093585a4ce3a96114617b7e7f938e99d91bbe4fdaeaeaf9c9cd8"
+    },
+    {
+      "filename": "avfilter-11.dll",
+      "bytes": 5419520,
+      "sha256": "b8e49f8041bd00900f88d638dec2d4c731fba64e97fd1f60159efd8e5cf7ea14"
+    },
+    {
+      "filename": "swscale-9.dll",
+      "bytes": 1381376,
+      "sha256": "de9964d319f181319530a0e7cc821ce2e299de7c9ebc140dee70f05863d9837f"
+    },
+    {
+      "filename": "swresample-6.dll",
+      "bytes": 237056,
+      "sha256": "489a44b17b5f55072008f65014ceed777b12eda563cfcfa68d2ed9fbcfb45e3d"
+    },
+    {
+      "filename": "video_player_thumbnail.dll",
+      "bytes": 472576,
+      "sha256": "0476962fab7b8f8ec79e93fbf176c7db658d98ada70bb10f065b6c59042a6d7f"
+    },
+    {
+      "filename": "thumbnail-worker.exe",
+      "bytes": 352256,
+      "sha256": "545d60a1ec4eee5a4c31514018306492906d1d08d1bbca3beea74123b5fb810b"
+    }
+  ],
+  "probes": [
+    {
+      "filename": "media_probe.exe",
+      "bytes": 531456,
+      "sha256": "d091caa2bbb9d25734418bcdd1181034d5dbcea0dce94d1100312f5b32ad434a"
+    },
+    {
+      "filename": "thumbnail_probe.exe",
+      "bytes": 521728,
+      "sha256": "352425c149a821392c050ceaa4c4ab66ceaa1955a6b66a2d1974cd3e78c1d753"
+    }
+  ],
+  "cases": [
+    {
+      "id": "h264-mp4",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <byte-identical-ascii-hardlink> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.081,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "input_path_kind": "byte-identical-ascii-hardlink",
+      "original_unicode_cli_attempt": {
+        "status": "failed",
+        "exit_code": -22,
+        "timed_out": false,
+        "elapsed_seconds": 0.042,
+        "input_filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "evidence": "Error opening input: Invalid argument; original non-ASCII CLI argument did not open."
+      },
+      "cli_alias": {
+        "filename": "cli-95a84d285b1546d0b20d0d010a4660d4.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 7837 kb/s, 30 fps, 30 tbr, 15360 tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC) (mp4a / 0x6134706D), 48000 Hz, mono, fltp, 125 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "h264-mp4",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.529,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "h264-m4v",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <byte-identical-ascii-hardlink> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.086,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.m4v",
+        "bytes": 3987108,
+        "sha256": "dfa5c7014a8f1900d107c1b6bf6cde0a77c9068ca2036ecab9808b03f70b0b87"
+      },
+      "input_path_kind": "byte-identical-ascii-hardlink",
+      "original_unicode_cli_attempt": {
+        "status": "failed",
+        "exit_code": -22,
+        "timed_out": false,
+        "elapsed_seconds": 0.03,
+        "input_filename": "Türkçe-ğış-Şİ-H264.m4v",
+        "evidence": "Error opening input: Invalid argument; original non-ASCII CLI argument did not open."
+      },
+      "cli_alias": {
+        "filename": "cli-d8f9bb92889b4a7b9e01ca15585f19f7.m4v",
+        "bytes": 3987108,
+        "sha256": "dfa5c7014a8f1900d107c1b6bf6cde0a77c9068ca2036ecab9808b03f70b0b87"
+      },
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 7837 kb/s, 30 fps, 30 tbr, 15360 tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC) (mp4a / 0x6134706D), 48000 Hz, mono, fltp, 125 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "h264-m4v",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.545,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.m4v",
+        "bytes": 3987108,
+        "sha256": "dfa5c7014a8f1900d107c1b6bf6cde0a77c9068ca2036ecab9808b03f70b0b87"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "h264-mkv",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <byte-identical-ascii-hardlink> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.098,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mkv",
+        "bytes": 3985488,
+        "sha256": "b61baef0e9d24466f9380298295fb9f747b40cd7bc0c05f30a039dc082cb9b80"
+      },
+      "input_path_kind": "byte-identical-ascii-hardlink",
+      "original_unicode_cli_attempt": {
+        "status": "failed",
+        "exit_code": -22,
+        "timed_out": false,
+        "elapsed_seconds": 0.038,
+        "input_filename": "Türkçe-ğış-Şİ-H264.mkv",
+        "evidence": "Error opening input: Invalid argument; original non-ASCII CLI argument did not open."
+      },
+      "cli_alias": {
+        "filename": "cli-5dd0a0dc30ec4f25afa1dafdb0111dea.mkv",
+        "bytes": 3985488,
+        "sha256": "b61baef0e9d24466f9380298295fb9f747b40cd7bc0c05f30a039dc082cb9b80"
+      },
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 1k tbn, start 0.021000 (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "h264-mkv",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.56,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mkv",
+        "bytes": 3985488,
+        "sha256": "b61baef0e9d24466f9380298295fb9f747b40cd7bc0c05f30a039dc082cb9b80"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.621,
+          "duration_seconds": 4.031,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.621,
+          "duration_seconds": 4.031,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.654,
+          "duration_seconds": 4.031,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "h264-mov",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <byte-identical-ascii-hardlink> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.09,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mov",
+        "bytes": 3987171,
+        "sha256": "a41d5dce2b638cb4d280d837938db9e21ca91ae02a610bfeaa3ab9ab99a631d5"
+      },
+      "input_path_kind": "byte-identical-ascii-hardlink",
+      "original_unicode_cli_attempt": {
+        "status": "failed",
+        "exit_code": -22,
+        "timed_out": false,
+        "elapsed_seconds": 0.032,
+        "input_filename": "Türkçe-ğış-Şİ-H264.mov",
+        "evidence": "Error opening input: Invalid argument; original non-ASCII CLI argument did not open."
+      },
+      "cli_alias": {
+        "filename": "cli-1b11047362874ebaab167aa8a3fc323c.mov",
+        "bytes": 3987171,
+        "sha256": "a41d5dce2b638cb4d280d837938db9e21ca91ae02a610bfeaa3ab9ab99a631d5"
+      },
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 7837 kb/s, 30 fps, 30 tbr, 15360 tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC) (mp4a / 0x6134706D), 48000 Hz, mono, fltp, 125 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "h264-mov",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.543,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mov",
+        "bytes": 3987171,
+        "sha256": "a41d5dce2b638cb4d280d837938db9e21ca91ae02a610bfeaa3ab9ab99a631d5"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "hevc-10bit",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.057,
+      "artifact": {
+        "filename": "HEVC-10bit.mkv",
+        "bytes": 398896,
+        "sha256": "76f3829082d24cb213ddde201cc6655f9bf27e20f08dbf8b0561a9e272c1d259"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "hevc",
+          "description": "(Main 10), yuv420p10le(tv, progressive), 320x180 [SAR 1:1 DAR 16:9], 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "hevc-10bit",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.538,
+      "artifact": {
+        "filename": "HEVC-10bit.mkv",
+        "bytes": 398896,
+        "sha256": "76f3829082d24cb213ddde201cc6655f9bf27e20f08dbf8b0561a9e272c1d259"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.625,
+          "duration_seconds": 4.021,
+          "codec": "hevc",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.625,
+          "duration_seconds": 4.021,
+          "codec": "hevc",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.021,
+          "codec": "hevc",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "av1-10bit",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.046,
+      "artifact": {
+        "filename": "AV1-10bit.mkv",
+        "bytes": 360646,
+        "sha256": "e0ef9bc5c9e131733911f9c8cadb67d5f07e27ec7548c00065ccf78ee561c4df"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "av1",
+          "description": "(libdav1d) (Main), yuv420p10le(tv, progressive), 320x180 [SAR 1:1 DAR 16:9], 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "av1-10bit",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.517,
+      "artifact": {
+        "filename": "AV1-10bit.mkv",
+        "bytes": 360646,
+        "sha256": "e0ef9bc5c9e131733911f9c8cadb67d5f07e27ec7548c00065ccf78ee561c4df"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.021,
+          "codec": "av1",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.021,
+          "codec": "av1",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.021,
+          "codec": "av1",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "av1-webm",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.043,
+      "artifact": {
+        "filename": "AV1-Opus.webm",
+        "bytes": 362895,
+        "sha256": "cb13340816bb0041ffcbdc29e10bd21829ab578f7fec1e8a59f616db15662678"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "av1",
+          "description": "(libdav1d) (Main), yuv420p10le(tv, progressive), 320x180 [SAR 1:1 DAR 16:9], 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "opus",
+          "description": ", 48000 Hz, mono, fltp"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "av1-webm",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.505,
+      "artifact": {
+        "filename": "AV1-Opus.webm",
+        "bytes": 362895,
+        "sha256": "cb13340816bb0041ffcbdc29e10bd21829ab578f7fec1e8a59f616db15662678"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.018,
+          "codec": "av1",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.018,
+          "codec": "av1",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.018,
+          "codec": "av1",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "vp8",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.041,
+      "artifact": {
+        "filename": "VP8-Vorbis.webm",
+        "bytes": 217840,
+        "sha256": "33e42b6bec2f84d13bec0c45fc66c610d719f1ececca7ee20a047ba674ed4082"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "vp8",
+          "description": ", yuv420p(tv, progressive), 320x180, SAR 1:1 DAR 16:9, 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "vorbis",
+          "description": ", 48000 Hz, mono, fltp"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "vp8",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.5,
+      "artifact": {
+        "filename": "VP8-Vorbis.webm",
+        "bytes": 217840,
+        "sha256": "33e42b6bec2f84d13bec0c45fc66c610d719f1ececca7ee20a047ba674ed4082"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.003,
+          "codec": "vp8",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.003,
+          "codec": "vp8",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.003,
+          "codec": "vp8",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "vp9",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.041,
+      "artifact": {
+        "filename": "VP9-Opus.webm",
+        "bytes": 196030,
+        "sha256": "9fdf5410867c41ca0f9e9764399e6130943ca15be83bc8aebbff1bd4095643bf"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "vp9",
+          "description": "(Profile 0), yuv420p(tv, progressive), 320x180, SAR 1:1 DAR 16:9, 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "opus",
+          "description": ", 48000 Hz, mono, fltp"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "vp9",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.584,
+      "artifact": {
+        "filename": "VP9-Opus.webm",
+        "bytes": 196030,
+        "sha256": "9fdf5410867c41ca0f9e9764399e6130943ca15be83bc8aebbff1bd4095643bf"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.583,
+          "duration_seconds": 4.008,
+          "codec": "vp9",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.583,
+          "duration_seconds": 4.008,
+          "codec": "vp9",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.583,
+          "duration_seconds": 4.008,
+          "codec": "vp9",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "mpeg2",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.043,
+      "artifact": {
+        "filename": "MPEG2.mkv",
+        "bytes": 502861,
+        "sha256": "f44733e23bd5e56d4eb53fdba50903218c2228d68dc92e4af76d6d358ad17b59"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "mpeg2video",
+          "description": "(Main), yuv420p(tv, progressive), 320x180 [SAR 1:1 DAR 16:9], 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "mpeg2",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.492,
+      "artifact": {
+        "filename": "MPEG2.mkv",
+        "bytes": 502861,
+        "sha256": "f44733e23bd5e56d4eb53fdba50903218c2228d68dc92e4af76d6d358ad17b59"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.021,
+          "codec": "mpeg2video",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.021,
+          "codec": "mpeg2video",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.021,
+          "codec": "mpeg2video",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "mpeg4-part2",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.038,
+      "artifact": {
+        "filename": "MPEG4-Part2.avi",
+        "bytes": 402738,
+        "sha256": "ce24804cb9ea364a7bfca25a2654ab1236452a4e936b2d9aa8ac50e8b9ccae39"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "mpeg4",
+          "description": "(Simple Profile) (FMP4 / 0x34504D46), yuv420p, 320x180 [SAR 1:1 DAR 16:9], 708 kb/s, 24 fps, 24 tbr, 24 tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "mp3",
+          "description": "(mp3float) (U[0][0][0] / 0x0055), 48000 Hz, mono, fltp, 64 kb/s"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "mpeg4-part2",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.487,
+      "artifact": {
+        "filename": "MPEG4-Part2.avi",
+        "bytes": 402738,
+        "sha256": "ce24804cb9ea364a7bfca25a2654ab1236452a4e936b2d9aa8ac50e8b9ccae39"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.042,
+          "codec": "mpeg4",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.042,
+          "codec": "mpeg4",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.042,
+          "codec": "mpeg4",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "wmv2",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.048,
+      "artifact": {
+        "filename": "WMV2.wmv",
+        "bytes": 439319,
+        "sha256": "38711f925216395881750c2bbc866a062f80994ddc6b3a0cb17b725c5a677d7f"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "wmv2",
+          "description": "(WMV2 / 0x32564D57), yuv420p, 320x180, SAR 1:1 DAR 16:9, 24 fps, 24 tbr, 1k tbn, start 0.043000"
+        },
+        {
+          "type": "audio",
+          "codec": "wmav2",
+          "description": "(a[1][0][0] / 0x0161), 48000 Hz, mono, fltp, 128 kb/s"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "wmv2",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.462,
+      "artifact": {
+        "filename": "WMV2.wmv",
+        "bytes": 439319,
+        "sha256": "38711f925216395881750c2bbc866a062f80994ddc6b3a0cb17b725c5a677d7f"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.71,
+          "duration_seconds": 4.043,
+          "codec": "wmv2",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.71,
+          "duration_seconds": 4.043,
+          "codec": "wmv2",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.71,
+          "duration_seconds": 4.043,
+          "codec": "wmv2",
+          "hwdec": "no",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "audio-mp3",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.035,
+      "artifact": {
+        "filename": "Audio.mp3",
+        "bytes": 32493,
+        "sha256": "e57c31a415cfeacf9d94c55565943ea7b42025d43c3488b6d3b8ff5b5cc9be4e"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "audio",
+          "codec": "mp3",
+          "description": "(mp3float), 48000 Hz, mono, fltp, 64 kb/s, start 0.023021"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "audio-mp3",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.222,
+      "artifact": {
+        "filename": "Audio.mp3",
+        "bytes": 32493,
+        "sha256": "e57c31a415cfeacf9d94c55565943ea7b42025d43c3488b6d3b8ff5b5cc9be4e"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.88,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 1.899,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 2.93,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": true
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "audio-aac",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.034,
+      "artifact": {
+        "filename": "Audio.aac",
+        "bytes": 36320,
+        "sha256": "2a4ad406a7399f3a0d244e99fcb088ad6a5e22755394207e671c4595d74d0fda"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp, 73 kb/s"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "audio-aac",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.204,
+      "artifact": {
+        "filename": "Audio.aac",
+        "bytes": 36320,
+        "sha256": "2a4ad406a7399f3a0d244e99fcb088ad6a5e22755394207e671c4595d74d0fda"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.9,
+          "duration_seconds": 3.976,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 1.91,
+          "duration_seconds": 3.976,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 2.91,
+          "duration_seconds": 4.011,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": true
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "audio-m4a",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.036,
+      "artifact": {
+        "filename": "Audio.m4a",
+        "bytes": 36560,
+        "sha256": "83abcf71620f91450914af66e81a0b6b2b0e5ede8be360f1e736d9150a1c778f"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC) (mp4a / 0x6134706D), 48000 Hz, mono, fltp, 69 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "audio-m4a",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.241,
+      "artifact": {
+        "filename": "Audio.m4a",
+        "bytes": 36560,
+        "sha256": "83abcf71620f91450914af66e81a0b6b2b0e5ede8be360f1e736d9150a1c778f"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.9,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 1.95,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 2.93,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": true
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "audio-flac",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.041,
+      "artifact": {
+        "filename": "Audio.flac",
+        "bytes": 60739,
+        "sha256": "078d892204204ef15acc91713a0a211091d3cd5799ee4dac46f701a9b1037a58"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "audio",
+          "codec": "flac",
+          "description": ", 48000 Hz, mono, s16"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "audio-flac",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.221,
+      "artifact": {
+        "filename": "Audio.flac",
+        "bytes": 60739,
+        "sha256": "078d892204204ef15acc91713a0a211091d3cd5799ee4dac46f701a9b1037a58"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.87,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 1.88,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 2.92,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": true
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "audio-wav",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.044,
+      "artifact": {
+        "filename": "Audio.wav",
+        "bytes": 384078,
+        "sha256": "179dbe7d99d5a28dadc76956ca03633131ecbad3b7b0aafb9a52834598caf237"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "audio",
+          "codec": "pcm_s16le",
+          "description": "([1][0][0][0] / 0x0001), 48000 Hz, mono, s16, 768 kb/s"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "audio-wav",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.281,
+      "artifact": {
+        "filename": "Audio.wav",
+        "bytes": 384078,
+        "sha256": "179dbe7d99d5a28dadc76956ca03633131ecbad3b7b0aafb9a52834598caf237"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.87,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 1.88,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        },
+        {
+          "position_seconds": 2.9,
+          "duration_seconds": 4.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 1
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": true
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "video-audio-ac3",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.095,
+      "artifact": {
+        "filename": "H264-ac3.mkv",
+        "bytes": 3970047,
+        "sha256": "83c582271caaf5d3036889bbd3517e934526162fd94cdf26d3c8dc9ba90a8e82"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 1k tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "ac3",
+          "description": ", 48000 Hz, mono, fltp, 96 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "video-audio-ac3",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.508,
+      "artifact": {
+        "filename": "H264-ac3.mkv",
+        "bytes": 3970047,
+        "sha256": "83c582271caaf5d3036889bbd3517e934526162fd94cdf26d3c8dc9ba90a8e82"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.7,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "video-audio-eac3",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.087,
+      "artifact": {
+        "filename": "H264-eac3.mkv",
+        "bytes": 3970035,
+        "sha256": "41a97e5378e15c9bb030088958faed795f86d2cf15831fe1563d726cf873b1df"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 1k tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "eac3",
+          "description": ", 48000 Hz, mono, fltp, 96 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "video-audio-eac3",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.508,
+      "artifact": {
+        "filename": "H264-eac3.mkv",
+        "bytes": 3970035,
+        "sha256": "41a97e5378e15c9bb030088958faed795f86d2cf15831fe1563d726cf873b1df"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "video-audio-dts",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.091,
+      "artifact": {
+        "filename": "H264-dts.mkv",
+        "bytes": 4631778,
+        "sha256": "2e4cc2351e5c33bcbbe016a002e51ff1868d283f840ee6fd24809fb8089eabc6"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 1k tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "dts",
+          "description": "(dca) (DTS), 48000 Hz, mono, fltp, 1411 kb/s (default)"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "video-audio-dts",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.552,
+      "artifact": {
+        "filename": "H264-dts.mkv",
+        "bytes": 4631778,
+        "sha256": "2e4cc2351e5c33bcbbe016a002e51ff1868d283f840ee6fd24809fb8089eabc6"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.633,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 1.633,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        },
+        {
+          "position_seconds": 2.633,
+          "duration_seconds": 4.011,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 2
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "external-srt",
+      "test": "native-external-subtitle-load",
+      "status": "passed",
+      "command": "media_probe <h264-fixture> <candidate-runtime> --subtitle <caption-fixture>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.511,
+      "artifact": {
+        "filename": "Subtitle.srt",
+        "bytes": 73,
+        "sha256": "0480cae9d64e2c32e56261220f179b9cfb6bf2fb9e50d2a511ea73f7dc5bad31"
+      },
+      "video_artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 2.7,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "sub",
+          "language": "",
+          "title": "Subtitle.srt",
+          "selected": true
+        }
+      ],
+      "subtitles_added": [
+        {
+          "id": 1,
+          "selected": true,
+          "filename": "Subtitle.srt"
+        }
+      ]
+    },
+    {
+      "id": "external-ass",
+      "test": "native-external-subtitle-load",
+      "status": "passed",
+      "command": "media_probe <h264-fixture> <candidate-runtime> --subtitle <caption-fixture>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.534,
+      "artifact": {
+        "filename": "Subtitle.ass",
+        "bytes": 601,
+        "sha256": "dc602d9cdff9ab2aa75bd28bcffa980bd157041a5f5a67fac371cf41306ca255"
+      },
+      "video_artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 1.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "sub",
+          "language": "",
+          "title": "Subtitle.ass",
+          "selected": true
+        }
+      ],
+      "subtitles_added": [
+        {
+          "id": 1,
+          "selected": true,
+          "filename": "Subtitle.ass"
+        }
+      ]
+    },
+    {
+      "id": "external-vtt",
+      "test": "native-external-subtitle-load",
+      "status": "passed",
+      "command": "media_probe <h264-fixture> <candidate-runtime> --subtitle <caption-fixture>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.57,
+      "artifact": {
+        "filename": "Subtitle.vtt",
+        "bytes": 73,
+        "sha256": "ed2f18068a65def37c1a1c274c48b35a9561cc50ce43f09e52db289ac9d4311d"
+      },
+      "video_artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 1.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 2.633,
+          "duration_seconds": 4.01,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "sub",
+          "language": "",
+          "title": "Subtitle.vtt",
+          "selected": true
+        }
+      ],
+      "subtitles_added": [
+        {
+          "id": 1,
+          "selected": true,
+          "filename": "Subtitle.vtt"
+        }
+      ]
+    },
+    {
+      "id": "two-audio-ass",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.098,
+      "artifact": {
+        "filename": "Two-Audio-ASS.mkv",
+        "bytes": 3994471,
+        "sha256": "5745acb26916a5dc4fe422e1e6ea88e5e500c470f1a33bb46821d5f0bfa7af4d"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 1k tbn (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp"
+        },
+        {
+          "type": "subtitle",
+          "codec": "ass",
+          "description": "(ssa), start 0.200000"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "two-audio-ass",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime> --exercise-controls",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.752,
+      "artifact": {
+        "filename": "Two-Audio-ASS.mkv",
+        "bytes": 3994471,
+        "sha256": "5745acb26916a5dc4fe422e1e6ea88e5e500c470f1a33bb46821d5f0bfa7af4d"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 1.033,
+          "duration_seconds": 4.021,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 4
+        },
+        {
+          "position_seconds": 2.3,
+          "duration_seconds": 4.021,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 4
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "tur",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 2,
+          "type": "audio",
+          "language": "eng",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "sub",
+          "language": "tur",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": [
+        {
+          "type": "audio",
+          "from": 1,
+          "to": 2,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "id": "embedded-srt",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.086,
+      "artifact": {
+        "filename": "Embedded-SRT.mkv",
+        "bytes": 3985705,
+        "sha256": "ac7af9d9762b81da0bcb55c102557336a7a259029dd7cc19ed74568897dcc3b0"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "h264",
+          "description": "(Constrained Baseline), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 1k tbn, start 0.021000 (default)"
+        },
+        {
+          "type": "audio",
+          "codec": "aac",
+          "description": "(LC), 48000 Hz, mono, fltp (default)"
+        },
+        {
+          "type": "subtitle",
+          "codec": "subrip",
+          "description": "(srt), start 0.221000"
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "embedded-srt",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.521,
+      "artifact": {
+        "filename": "Embedded-SRT.mkv",
+        "bytes": 3985705,
+        "sha256": "ac7af9d9762b81da0bcb55c102557336a7a259029dd7cc19ed74568897dcc3b0"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.688,
+          "duration_seconds": 4.031,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 1.688,
+          "duration_seconds": 4.031,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 2.688,
+          "duration_seconds": 4.031,
+          "codec": "h264",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "sub",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "embedded-vtt",
+      "test": "candidate-ffmpeg-decode",
+      "status": "passed",
+      "command": "ffmpeg -i <fixture> -t 1 -map 0:v? -map 0:a? -f null NUL",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.047,
+      "artifact": {
+        "filename": "Embedded-VTT.webm",
+        "bytes": 196254,
+        "sha256": "b27f3496157f5f6a157463d1285ec3a70eb73a49cde7a6b89c735f7a87916208"
+      },
+      "input_path_kind": "original",
+      "original_unicode_cli_attempt": null,
+      "cli_alias": null,
+      "streams": [
+        {
+          "type": "video",
+          "codec": "vp9",
+          "description": "(Profile 0), yuv420p(tv, progressive), 320x180, SAR 1:1 DAR 16:9, 24 fps, 24 tbr, 1k tbn"
+        },
+        {
+          "type": "audio",
+          "codec": "opus",
+          "description": ", 48000 Hz, mono, fltp"
+        },
+        {
+          "type": "subtitle",
+          "codec": "webvtt",
+          "description": ""
+        }
+      ],
+      "failure": ""
+    },
+    {
+      "id": "embedded-vtt",
+      "test": "native-player-playback",
+      "status": "passed",
+      "command": "media_probe <fixture> <candidate-runtime>",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.519,
+      "artifact": {
+        "filename": "Embedded-VTT.webm",
+        "bytes": 196254,
+        "sha256": "b27f3496157f5f6a157463d1285ec3a70eb73a49cde7a6b89c735f7a87916208"
+      },
+      "snapshots": [
+        {
+          "position_seconds": 0.0,
+          "duration_seconds": 0.0,
+          "codec": "",
+          "hwdec": "",
+          "output": "",
+          "tracks": 0
+        },
+        {
+          "position_seconds": 0.667,
+          "duration_seconds": 4.008,
+          "codec": "vp9",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 1.667,
+          "duration_seconds": 4.008,
+          "codec": "vp9",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        },
+        {
+          "position_seconds": 2.667,
+          "duration_seconds": 4.008,
+          "codec": "vp9",
+          "hwdec": "d3d11va",
+          "output": "bt.709 / bt.1886 / rgb10a2",
+          "tracks": 3
+        }
+      ],
+      "tracks": [
+        {
+          "id": 1,
+          "type": "video",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "audio",
+          "language": "",
+          "title": "",
+          "selected": false
+        },
+        {
+          "id": 1,
+          "type": "sub",
+          "language": "",
+          "title": "",
+          "selected": false
+        }
+      ],
+      "track_switches": []
+    },
+    {
+      "id": "h264-mp4",
+      "test": "registration-free-com-thumbnail",
+      "status": "passed",
+      "command": "thumbnail_probe <provider> <fixture> <output.bmp> 256",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.101,
+      "artifact": {
+        "filename": "Türkçe-ğış-Şİ-H264.mp4",
+        "bytes": 3987120,
+        "sha256": "84ec863140efa4bc0a737fbe9765fd10d5814673a259e2eecdca1db7f0186a12"
+      },
+      "bitmap": {
+        "filename": "h264-mp4-thumbnail.bmp",
+        "bytes": 147510,
+        "sha256": "e172997f3ed944e7463517d1b3b034d9078e8db8144523b79b6a723ce7237546"
+      },
+      "dimensions": [
+        256,
+        144
+      ]
+    },
+    {
+      "id": "hevc-10bit",
+      "test": "registration-free-com-thumbnail",
+      "status": "passed",
+      "command": "thumbnail_probe <provider> <fixture> <output.bmp> 256",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.075,
+      "artifact": {
+        "filename": "HEVC-10bit.mkv",
+        "bytes": 398896,
+        "sha256": "76f3829082d24cb213ddde201cc6655f9bf27e20f08dbf8b0561a9e272c1d259"
+      },
+      "bitmap": {
+        "filename": "hevc-10bit-thumbnail.bmp",
+        "bytes": 147510,
+        "sha256": "2cd2d312a4f9a26ee18be19db3ae60c5878ae5a4b5c448b6264db302f2e2dec4"
+      },
+      "dimensions": [
+        256,
+        144
+      ]
+    },
+    {
+      "id": "av1-10bit",
+      "test": "registration-free-com-thumbnail",
+      "status": "passed",
+      "command": "thumbnail_probe <provider> <fixture> <output.bmp> 256",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.078,
+      "artifact": {
+        "filename": "AV1-10bit.mkv",
+        "bytes": 360646,
+        "sha256": "e0ef9bc5c9e131733911f9c8cadb67d5f07e27ec7548c00065ccf78ee561c4df"
+      },
+      "bitmap": {
+        "filename": "av1-10bit-thumbnail.bmp",
+        "bytes": 147510,
+        "sha256": "20c304bf71fbca8f472bfa4c27604804711ad517dbdf54645c5342642c3bb87c"
+      },
+      "dimensions": [
+        256,
+        144
+      ]
+    },
+    {
+      "id": "corrupt",
+      "test": "registration-free-com-thumbnail",
+      "status": "passed",
+      "command": "thumbnail_probe <provider> <fixture> <output.bmp> 256 --expect-failure",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.069,
+      "artifact": {
+        "filename": "Corrupt.mkv",
+        "bytes": 60,
+        "sha256": "141fdfb2d4b11b6963d9af8715e3ad8c12001eb8c479207a90d30a4c008889c9"
+      },
+      "bitmap": null,
+      "dimensions": null
+    },
+    {
+      "id": "stall-worker",
+      "test": "worker-hard-timeout",
+      "status": "passed",
+      "command": "thumbnail_probe --timeout-worker <stall-worker> <fixture>",
+      "worker": {
+        "filename": "thumbnail_stall_worker.exe",
+        "bytes": 225792,
+        "sha256": "bfe26845e344af0c183aeb2d9586c0f962871de2261aa0e729304116db5fddf4"
+      },
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.038
+    }
+  ],
+  "completed_utc": "2026-10-07T20:58:38.4245087Z"
+}

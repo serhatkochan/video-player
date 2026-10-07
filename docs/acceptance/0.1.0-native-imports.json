@@ -1,0 +1,58 @@
+[
+  {
+    "filename": "video-player.exe",
+    "sha256": "66cde8dcd4d3196a5bb6260a0df555d7e7d7e6fccc9686ce6779acfb306a6863",
+    "dynamic_msvc_crt_imports": 0,
+    "imports": [
+      "oleaut32.dll",
+      "user32.dll",
+      "kernel32.dll",
+      "shell32.dll",
+      "combase.dll",
+      "ole32.dll",
+      "ntdll.dll",
+      "uiautomationcore.dll",
+      "advapi32.dll",
+      "gdi32.dll",
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "opengl32.dll",
+      "dxgi.dll",
+      "setupapi.dll",
+      "bcryptprimitives.dll",
+      "bcrypt.dll",
+      "ADVAPI32.dll",
+      "KERNEL32.dll",
+      "USER32.dll",
+      "imm32.dll",
+      "ws2_32.dll",
+      "dwmapi.dll",
+      "uxtheme.dll"
+    ]
+  },
+  {
+    "filename": "video_player_thumbnail.dll",
+    "sha256": "0476962fab7b8f8ec79e93fbf176c7db658d98ada70bb10f065b6c59042a6d7f",
+    "dynamic_msvc_crt_imports": 0,
+    "imports": [
+      "kernel32.dll",
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "gdi32.dll",
+      "oleaut32.dll",
+      "combase.dll",
+      "api-ms-win-core-winrt-error-l1-1-0.dll",
+      "KERNEL32.dll",
+      "ntdll.dll"
+    ]
+  },
+  {
+    "filename": "thumbnail-worker.exe",
+    "sha256": "545d60a1ec4eee5a4c31514018306492906d1d08d1bbca3beea74123b5fb810b",
+    "dynamic_msvc_crt_imports": 0,
+    "imports": [
+      "kernel32.dll",
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "ntdll.dll",
+      "KERNEL32.dll"
+    ]
+  }
+]

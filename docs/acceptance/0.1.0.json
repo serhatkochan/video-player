@@ -1,0 +1,106 @@
+{
+  "version": "0.1.0",
+  "channel": "preview",
+  "tester": "Codex automated checks on the existing development Windows machine",
+  "testedCommit": "0d9cac978379616de40c613bf120d4746ba4bc22",
+  "testDate": "2026-10-07T21:10:59.4333004Z",
+  "machines": [
+    {
+      "os": "Microsoft Windows 11 Pro",
+      "build": "26200",
+      "logical_processors": 32,
+      "cpu": [
+        {
+          "Name": "13th Gen Intel(R) Core(TM) i9-13900K",
+          "NumberOfCores": 24,
+          "NumberOfLogicalProcessors": 32
+        }
+      ],
+      "gpu": [
+        {
+          "Name": "NVIDIA GeForce RTX 4080",
+          "DriverVersion": "32.0.15.9186"
+        }
+      ],
+      "physical_memory_gib": 31.71
+    }
+  ],
+  "limitations": [
+    "Existing Windows 11 machine only; clean Windows without codec packs and real installer install/update/uninstall have not been validated.",
+    "Registration-free COM and isolated registry/installer-init regressions passed; visible Explorer thumbnails, surrogate activation and default-app coexistence remain untested.",
+    "Physical HDR10, HDR toggling, monitor transitions and reference SDR color correctness are untested. A synthetic PQ/BT.2020 thumbnail exercised tone mapping only.",
+    "The sample suite does not establish the full codec matrix: VC-1, 4K/8K, long paths, variable frame rate and every GPU/software fallback combination remain untested.",
+    "Subtitle stream loading/selection and audio switching passed; visual ASS/SSA styling, GUI external subtitle loading and the complete resume workflow still need manual acceptance.",
+    "Performance is seven warm-cache trials on one machine and one 1080p H.264/AAC fixture. Window handles and playback position notifications are not first-rendered-frame measurements.",
+    "The bundled auxiliary FFmpeg CLI has a Unicode argv limitation; four original CLI failures are retained in the media report. Supplementary decode used verified byte-identical ASCII hardlinks. Native playback and COM used original Turkish paths successfully."
+  ],
+  "results": {
+    "automatedQuality": "pass",
+    "runtimeSmoke": "pass",
+    "thumbnailWorkerSmoke": "pass",
+    "codecSamplePlayback": "pass",
+    "cleanWindows11": "not-tested",
+    "vlcCoexistence": "not-tested",
+    "defaultAppThumbnails": "not-tested",
+    "codecMatrix": "not-tested",
+    "hdr10PhysicalDisplay": "not-tested",
+    "sdrToneMapping": "not-tested",
+    "displaySwitching": "not-tested",
+    "subtitleAndAudio": "not-tested",
+    "corruptMediaIsolation": "not-tested",
+    "installUpgradeUninstall": "not-tested",
+    "performanceMeasured": "pass"
+  },
+  "evidence": {
+    "quality": {
+      "fmt": "pass",
+      "clippyWorkspaceAllTargets": "pass",
+      "workspaceTestsPassed": 45,
+      "testsFailed": 0,
+      "releasePolicyRegressions": "pass (synthetic fixtures, not hardware attestation)",
+      "isolatedWindowsRegistryIntegration": "pass",
+      "installerInitialization": "native/machine/user accepted; redirected path rejected; no actual installation",
+      "rustNoticeDownloadRegression": "pass",
+      "rustPackagesWithCollectedNotices": 228,
+      "knownCredentialAndPrivateFileScan": "pass for tracked files and public Git history"
+    },
+    "media": {
+      "report": "0.1.0-media-checks.json",
+      "checksPassed": 54,
+      "checksFailed": 0,
+      "source": "Original synthetic fixtures only",
+      "nativePlayback": "23 playable samples, external SRT/ASS/VTT, embedded subtitles, alternate audio track and playback controls",
+      "thumbnails": "H.264, HEVC 10-bit and AV1 10-bit produce opaque colored BGRA bitmaps; invalid input rejected; stalled worker terminated",
+      "hdrThumbnail": {
+        "scope": "Synthetic PQ/BT.2020 HEVC thumbnail path, not physical HDR/color acceptance",
+        "fixtureSha256": "51e054c4fa27f09901da67e78b2207387e6a4e717b4a3991ab329675cc2aafd5",
+        "dimensions": [
+          256,
+          144
+        ],
+        "observedProbeSeconds": 0.046
+      },
+      "abi": "Twelve FFmpeg 8 x64 C header offsets checked with compiled C probe and matched Rust ABI assertions"
+    },
+    "performance": {
+      "report": "../benchmarks/0.1.0-windows-x64.json",
+      "comparison": "../benchmarks/0.1.0-player-comparison.json",
+      "trials": 7,
+      "discardedWarmupsPerScenario": 1
+    },
+    "nativeImports": "0.1.0-native-imports.json",
+    "measuredExecutableSha256": "66cde8dcd4d3196a5bb6260a0df555d7e7d7e6fccc9686ce6779acfb306a6863",
+    "measuredRuntimeSha256": {
+      "libmpv": "7197de27964f34c141d7e349776c420e20d74ca9e79dfb482345231d0627da97",
+      "ffmpeg": "cd3221cd6e4db71f0e32d89ef6bba3e6635d2eef9911dc161dc2f4a0778e6cee"
+    },
+    "sourceDistribution": {
+      "manifest": "../../packaging/runtime-manifest.json",
+      "reviewedComplete": true,
+      "url": "https://github.com/serhatkochan/video-player/releases/download/runtime-20261007/Video-Player-media-corresponding-sources.zip",
+      "sha256": "c83eb1e0a1203bde2ab6dea57558b6c3ba95837c10404106973d72654af9440e",
+      "libmpvBuild": "https://github.com/serhatkochan/video-player/actions/runs/37679699506",
+      "ffmpegBuild": "https://github.com/serhatkochan/video-player/actions/runs/37680156707"
+    }
+  }
+}
